@@ -1,8 +1,7 @@
-
-public class LinkedList<T> {
+public class LinkedList<T>{
 
     // Classe interna Node
-    private class Node {
+    private class Node{
 
         public T element;
         public Node next;
@@ -15,7 +14,7 @@ public class LinkedList<T> {
         public Node(T element, Node next) {
             this.element = element;
             this.next = next;
-        }        
+        }
     }
 
     // Referencia para o primeiro elemento da lista encadeada.
@@ -81,7 +80,7 @@ public class LinkedList<T> {
         }
         else { // insercao no meio
             Node ant = head;
-            for (int i=0; i<index-1; i++) {
+            for (int i = 0; i < index-1; i++) {
                 ant = ant.next;
             }
             n.next = ant.next;
@@ -102,12 +101,12 @@ public class LinkedList<T> {
         if ((index < 0) || (index >= count)) {
             throw new IndexOutOfBoundsException();
         }
+        
         Node aux = head;
-        int c = 0;
-        while (c < index) {
+        
+        for(int c = 0; c < index; c++)
             aux = aux.next;
-            c++;
-        }
+
         return (aux.element);
     }
 
@@ -293,5 +292,4 @@ public class LinkedList<T> {
 
         return s.toString();
     }
-      
 }
