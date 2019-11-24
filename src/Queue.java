@@ -1,63 +1,45 @@
+
+import java.util.LinkedList;
+
 public class Queue<E> {
-    
-    private class Node <T> {
-        public T element;
-        public Node next;
-        public Node(T e) {
-            element = e;
-            next = null;
-        }
-    }
-    
-    // Atributos da classe Fila (Queue)
-    private int count;
-    private Node<E> head;
-    private Node<E> tail;
-    
+
+    private LinkedList<E> fila;
+
     public Queue() {
-        count = 0;
-        head = null;
-        tail = null;
+        fila = new LinkedList<E>();
     }
-    
-    public void enqueue(E element) {
-        Node<E> n = new Node(element);
-        if (count==0) {
-            head = n;
-        }
-        else {
-            tail.next = n;      
-        }
-        tail = n;
-        count++;
-    }
-    
-    public E dequeue() {
-        if (count == 0)
-            throw new EmptyQueueException("Fila vazia!"); // Erro
-        E aux = head.element;
-        head = head.next;
-        count--;
-        return aux;
-    }
-    
-    public E head() {
-        if (count == 0)
-            throw new EmptyQueueException("Fila vazia!"); // Erro
-        return head.element;
-    }
-    
-    public boolean isEmpty() {
-        return (count==0);
-    }
-    
+
     public int size() {
-        return count;
+        return fila.size();
     }
-    
+
+    public boolean isEmpty() {
+        return fila.isEmpty();
+    }
+
+    public E head() throws EmptyQueueException {
+        if (fila.isEmpty()) {
+            throw new EmptyQueueException("A fila esta vazia");
+        } else {
+            E elem = fila.get(0);
+            return elem;
+        }
+    }
+
+    public void enqueue(E element) {
+        fila.add(element);
+    }
+
+    public E dequeue() throws EmptyQueueException {
+        if (fila.isEmpty()) {
+            throw new EmptyQueueException("Queue is empty!");
+        } else {
+            E elem = fila.remove(0);
+            return elem;            
+        }
+    }
+
     public void clear() {
-        head = null;
-        tail = null;
-        count = 0;
+        fila.clear();
     }
 }
