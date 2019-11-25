@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - app",
+            "request": "launch",
+            "mainClass": "src.app",
+            "projectName": "T3_ALEST_40b7fe35"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - app",
+            "request": "launch",
+            "mainClass": "app",
+            "projectName": "T3_ALEST_40b7fe35"
+        }
+    ]
+}
