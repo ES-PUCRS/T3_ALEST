@@ -1,3 +1,6 @@
+package src;
+
+import src.algorithms.tree.*;
 
 public class app {
     public static void main(String[] args) {

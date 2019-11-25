@@ -1,3 +1,5 @@
+package src.algorithms.tree;
+
 public class Log{
 	private static Log instance;
 

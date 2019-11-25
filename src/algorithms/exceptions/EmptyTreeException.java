@@ -1,3 +1,5 @@
+package src.algorithms.exceptions;
+
 public class EmptyTreeException extends RuntimeException {
 
     public EmptyTreeException() {

@@ -1,3 +1,5 @@
+package src.algorithms.exceptions;
+
 public class NodeNotFoundException extends RuntimeException {
 
     public NodeNotFoundException() {

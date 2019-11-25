@@ -1,3 +1,6 @@
+package src.algorithms.datastructures;
+
+import src.algorithms.exceptions.EmptyQueueException;
 
 import java.util.LinkedList;
 
@@ -32,7 +35,7 @@ public class Queue<E> {
 
     public E dequeue() throws EmptyQueueException {
         if (fila.isEmpty()) {
-            throw new EmptyQueueException("Queue is empty!");
+            throw new EmptyQueueException("src.algorithms.datastructures.Queue is empty!");
         } else {
             E elem = fila.remove(0);
             return elem;            

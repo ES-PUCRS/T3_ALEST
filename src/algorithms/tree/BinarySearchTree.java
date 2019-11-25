@@ -1,3 +1,10 @@
+package src.algorithms.tree;
+
+import src.algorithms.datastructures.LinkedList;
+import src.algorithms.datastructures.Queue;
+import src.algorithms.exceptions.EmptyTreeException;
+import src.algorithms.exceptions.NodeNotFoundException;
+
 public class BinarySearchTree {
     
     public static Log log;
@@ -160,7 +167,7 @@ public class BinarySearchTree {
             else if(father.right != null && father.right.element == n.element)
                 father.right = r;   
             else
-                throw new NodeNotFoundException("Node father ("+father.element+") does not have "+n.element+" Node to replace by "+r.element+"Node");     
+                throw new NodeNotFoundException("Node father ("+father.element+") does not have "+n.element+" Node to replace by "+r.element+"Node");
         }else if (n.element == root.element && r != null){
             root = r; 
             log.replaceChild(n.element, r.element);
@@ -278,7 +285,7 @@ public class BinarySearchTree {
     /** 
      * Retorna uma lista com todos os elementos da arvore na ordem de 
      * caminhamento em largura. 
-     * @return LinkedList lista com os elementos da arvore
+     * @return src.algorithms.datastructures.LinkedList lista com os elementos da arvore
      */     
     public LinkedList positionsWidth() {
         Queue<Node> fila = new Queue<>();
