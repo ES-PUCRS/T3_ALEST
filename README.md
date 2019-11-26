@@ -6,8 +6,7 @@ ministrado pela professora Isabel Manshour
 ## Objetivo geral
 O obejtivo deste trabalho é explorar os conceitos de estruturas de dados, especialmente o relacionado a árvores
 
-programação orientada a objetos em especial herança e polimorfismo. Conceitos de programação orientada a eventos também são explorados na medida que a interface com o usuário também deve ser ampliada a modificada. Durante o desenvolvimento do trabalho final, foi procurado a utilização de todos os conhecimentos ofertados na cadeira de P.O.O. como Lambda, Orientado à objeto, Try, Catch, --Finally, Throw, classes singleton, Comparable e Collections.
-
+programação orientada a objetos em especial herança e polimorfismo. Conceitos de programação orientada a eventos também são explorados na medida que a interface com o usuário também deve ser ampliada a modificada. Durante o desenvolvimento do trabalho final, foi procurado a utilização de todos os conhecimentos ofertados na cadeira de P.O.O. como Lambda, Orientado à objeto, Try, Catch, --Finally, Throw, classes singleton,
 
 ## Estrutura do projeto
 UI = User Interface = Principalmente estruturada para a execução 
