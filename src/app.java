@@ -4,7 +4,10 @@ import src.algorithms.tree.*;
 
 public class app {
     public static void main(String[] args) {
-        BinarySearchTree b = new BinarySearchTree();
+
+        RedBlackTree b = new RedBlackTree();
+
+        // BinarySearchTree b = new BinarySearchTree();
         b.add(15);
         b.add(23);
         b.add(9);
@@ -15,8 +18,8 @@ public class app {
         b.add(1);
 
 
-        System.out.println("\n\npositionsCentral\n"+ b.positionsCentral().toString());
-        System.out.println("\n\npositionsPre\n"+ b.positionsPre().toString());
+        // System.out.println("\n\npositionsCentral\n"+ b.positionsCentral().toString());
+        // System.out.println("\n\npositionsPre\n"+ b.positionsPre().toString());
         System.out.println("\n\nTree: \n"+ b);
     }   
 }

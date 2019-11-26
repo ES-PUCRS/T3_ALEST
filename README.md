@@ -1,4 +1,4 @@
-# Terceiro trabalho de Algoritmos e Estruturas de Dados 2/2019
+# T3 de Algoritmos e Estruturas de Dados 2/2019
 Terceiro trabalho da disciplina Algoritmos e Estrutura de Dados
 ministrado pela professora Isabel Manshour
 
@@ -9,15 +9,14 @@ O obejtivo deste trabalho é explorar os conceitos de estruturas de dados, espec
 programação orientada a objetos em especial herança e polimorfismo. Conceitos de programação orientada a eventos também são explorados na medida que a interface com o usuário também deve ser ampliada a modificada. Durante o desenvolvimento do trabalho final, foi procurado a utilização de todos os conhecimentos ofertados na cadeira de P.O.O. como Lambda, Orientado à objeto, Try, Catch, --Finally, Throw, classes singleton,
 
 ## Estrutura do projeto
-UI = User Interface = Principalmente estruturada para a execução 
-Peão (Pawn) = Como primeiro movimento o mesmo pode se mover em até duas casas caso não haja ninguém em seu caminho. Seu ataque apenas acontece uma casa à frente nas diagonais, nunca diretamente à frente. O peão também pode assumir qualquer outra peça -com excessão do rei- após alcançar o limite do tabuleiro;
-Torre (Rook) = Apenas se movimenta entre colunas ou entre linhas, jamais os dois juntos, também não pode se mover caso outra peça esteja no seu caminho;
-Cavalo (Knight) = Move-se por duas colunas e uma linha ou o inverso, não se afetando ter outra peça em seu caminho;
-Bispo (Bishop) = Move-se paralelamente igual entre linhas e colunas, não podendo ter outra peça em seu caminho;
-Rainha (Queen) = Seu movimento é caracterizado pelo Bispo e pela Torre, podendo assumir qualquer um dos dois; 
-Rei (King) = A peça mais importante do jogo, caso derrotada, o jogador perde. A mesma não pode assumir uma posição que lhe deixe a menos de um bloco de distância do rei inimigo.
-* Movimentos especiais como Rock não estão implementados nesse jogo *
-
+UI = User Interface = Principalmente estruturada para a execução do GUI, sendo a mesma uma tela predominantemente branca desenvolvida em JavaFX, tendo seu lado esquerda um painel designado ao controle da árvore e o centro/lado direito respectivamente direcionados à exibição visual didática da construção da Árvore Rubro-Negra;
+Algorithms = package das estruturas de dados utilizadas no projeto, contendo:
+* datastructures;
+	* LinkedListOfInteger;
+	* LinkedList;
+	* Queue.
+* Tree.
+Those 
 
 ## Estrutura de classes
 O diagrama de classes pode ser encontrado junto a este arquivo.
