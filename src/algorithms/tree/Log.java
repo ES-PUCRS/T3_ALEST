@@ -1,5 +1,7 @@
 package src.algorithms.tree;
 
+import src.algorithms.tree.NodeLog;
+
 public class Log{
 	private static Log instance;
 
@@ -14,6 +16,29 @@ public class Log{
         return instance;
     }
 
+    public String add(Integer added){
+    	String log = "";
+    		if(this.log){
+    			log += "Added on root: {" + added + "}";
+    			if(printOnTerminal)
+		            System.out.println(log);
+    		}
+    	return log;
+    }
+    public String add(Integer father, Integer son){
+    	String log = "";
+    		if(this.log){
+    			log += "Added: {" + father + "{";
+    			if(father > son)
+    				log += "L";
+				else
+					log += "R";
+				log += son + "\'R\'}}"; 
+    			if(printOnTerminal)
+		            System.out.println(log);
+    		}
+    	return log;
+    }
 
 	public String remove(Integer nAux, Integer nAuxleft, Integer nAuxright, Integer nAuxfather, Integer nAuxrightfather,
                          Integer leftLeaf, Integer leftLeafleft, Integer leftLeaffather,
@@ -124,6 +149,7 @@ public class Log{
         }
         return log;    
 	}
+
 	public String replaceChild(Integer n, Integer r){
 		String log = "";
 	    if(this.log)
@@ -137,5 +163,10 @@ public class Log{
         	if(printOnTerminal)
 	        	System.out.println(log);
         return log;   
+	}
+
+	public String nodeTeste(NodeLog n){
+		System.out.println("{"+n.element+"}");
+		return "";
 	}
 }

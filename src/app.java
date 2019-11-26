@@ -8,18 +8,21 @@ public class app {
         RedBlackTree b = new RedBlackTree();
 
         // BinarySearchTree b = new BinarySearchTree();
-        b.add(15);
-        b.add(23);
-        b.add(9);
-        b.add(11);
-        b.add(2);
-        b.add(20);
-        b.add(38);
-        b.add(1);
 
+        b.add(22);
+
+        // for(int i = 15; i > 0 ; i -= 5){
+        //     b.add(i);
+        //     System.out.println("\n\nTree: \n"+ b);
+        //     try{
+        //         Thread.sleep(1000);
+        //     }catch(Exception e){
+        //         System.out.println(e);   
+        //     }
+        // }
 
         // System.out.println("\n\npositionsCentral\n"+ b.positionsCentral().toString());
         // System.out.println("\n\npositionsPre\n"+ b.positionsPre().toString());
-        System.out.println("\n\nTree: \n"+ b);
+        // System.out.println("\n\nTree: \n"+ b);
     }   
 }
