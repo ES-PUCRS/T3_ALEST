@@ -14,8 +14,6 @@ public class app {
         b.add(38);
         b.add(1);
 
-        b.remove(15);
-
 
         System.out.println("\n\npositionsCentral\n"+ b.positionsCentral().toString());
         System.out.println("\n\npositionsPre\n"+ b.positionsPre().toString());

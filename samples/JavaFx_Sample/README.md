@@ -1,16 +1,13 @@
-# Terceiro trabalho de Algoritmos e Estruturas de Dados 2/2019
-Terceiro trabalho da disciplina Algoritmos e Estrutura de Dados
-ministrado pela professora Isabel Manshour
+# Trabalho final de P.O.O. 1/2019
+Trabalho final da disciplina de programação orientada a objetos
+ministrado pelo professor Bernardo Copstein
 
-# Árvore Rubro-Negra
+# Chess_TF
 ## Objetivo geral
-O obejtivo deste trabalho é explorar os conceitos de estruturas de dados, especialmente o relacionado a árvores
-
-programação orientada a objetos em especial herança e polimorfismo. Conceitos de programação orientada a eventos também são explorados na medida que a interface com o usuário também deve ser ampliada a modificada. Durante o desenvolvimento do trabalho final, foi procurado a utilização de todos os conhecimentos ofertados na cadeira de P.O.O. como Lambda, Orientado à objeto, Try, Catch, --Finally, Throw, classes singleton, Comparable e Collections.
+O obejtivo deste trabalho é explorar os conceitos de programação orientada a objetos em especial herança e polimorfismo. Conceitos de programação orientada a eventos também são explorados na medida que a interface com o usuário também deve ser ampliada a modificada. Durante o desenvolvimento do trabalho final, foi procurado a utilização de todos os conhecimentos ofertados na cadeira de P.O.O. como Lambda, Orientado à objeto, Try, Catch, --Finally, Throw, classes singleton, Comparable e Collections.
 
 
-## Estrutura do projeto
-UI = User Interface = Principalmente estruturada para a execução 
+## Regras do Jogo
 Peão (Pawn) = Como primeiro movimento o mesmo pode se mover em até duas casas caso não haja ninguém em seu caminho. Seu ataque apenas acontece uma casa à frente nas diagonais, nunca diretamente à frente. O peão também pode assumir qualquer outra peça -com excessão do rei- após alcançar o limite do tabuleiro;
 Torre (Rook) = Apenas se movimenta entre colunas ou entre linhas, jamais os dois juntos, também não pode se mover caso outra peça esteja no seu caminho;
 Cavalo (Knight) = Move-se por duas colunas e uma linha ou o inverso, não se afetando ter outra peça em seu caminho;
@@ -42,11 +39,7 @@ O diagrama de classes pode ser encontrado junto a este arquivo.
 
 
 ## Instruções para compilar e executar o projeto
-1. Baixe o projeto (aqui)["link"], ou clone-o por aqui: 
-1.1. Caso tenha optado por baixar, será necessário descompactar o projeto. 
-2. Abra a pasta /src/commands presente no projeto
-3. Execute o arquivo Build.bat. Ele é responsável por buildar o projeto criando os arquivos .class
-4. Agora rode o arquivo Compile.bat. Esse arquivo irá executar o projeto Java.
-
-//'till dev (:
-3. Execute o arquivo Run.bat. Esse arquivo é responsável por gerenciar os backups e buildar o projeto.
+1. Entre no diretório do projeto;
+2. Abra o terminal;
+3. Compile o projeto utilizando o comando "javac *.java";
+4. Para rodar o projeto utilize o comando "java UX".
