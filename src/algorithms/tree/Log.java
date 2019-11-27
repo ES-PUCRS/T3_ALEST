@@ -40,79 +40,77 @@ public class Log{
     	return log;
     }
 
-	public String remove(Integer nAux, Integer nAuxleft, Integer nAuxright, Integer nAuxfather, Integer nAuxrightfather,
-                         Integer leftLeaf, Integer leftLeafleft, Integer leftLeaffather,
-                         Integer rightLeaf, Integer rightLeafright){
+	public String remove(NodeLog nAux, NodeLog leftLeaf, NodeLog rightLeaf, Integer nAuxrightfather){
 
 		String log = "";
 	    if(this.log){
 	        //---------LEFT-CHANGE---------------------------------------------------------------------------//
-	        if(leftLeafleft != null && nAuxleft != null){
-	        	log += "leftLeaf.left = nAux.left => "+leftLeaf+"("+leftLeafleft+")"+" = "+nAux+"("+nAuxleft+")\n";
+	        if(leftLeaf.left != null && nAux.left != null){
+	        	log += "leftLeaf.left = nAux.left => "+leftLeaf+"("+leftLeaf.left+")"+" = "+nAux+"("+nAux.left+")\n";
 	        	if(printOnTerminal)
 		            System.out.println("leftLeaf.left = nAux.left => "+
-		                leftLeaf+"("+leftLeafleft+")"+" = "+nAux+"("+nAuxleft+")");
-	        }else if(leftLeafleft == null){
-	        	log += "leftLeaf.left = nAux.left => "+"null"+" = "+nAux+"("+nAuxleft+")\n";
+		                leftLeaf+"("+leftLeaf.left+")"+" = "+nAux+"("+nAux.left+")");
+	        }else if(leftLeaf.left == null){
+	        	log += "leftLeaf.left = nAux.left => "+"null"+" = "+nAux+"("+nAux.left+")\n";
 	        	if(printOnTerminal)
 		            System.out.println("leftLeaf.left = nAux.left => "+
-		                "null"+" = "+nAux+"("+nAuxleft+")");
+		                "null"+" = "+nAux+"("+nAux.left+")");
 	        }else{
-	        	log +="leftLeaf.father = nAux.father => "+leftLeaf+"("+leftLeafleft+")"+" = "+"null\n";
+	        	log +="leftLeaf.father = nAux.father => "+leftLeaf+"("+leftLeaf.left+")"+" = "+"null\n";
 	        	if(printOnTerminal)
 		            System.out.println("leftLeaf.father = nAux.father => "+
-		                leftLeaf+"("+leftLeafleft+")"+" = "+"null");
+		                leftLeaf+"("+leftLeaf.left+")"+" = "+"null");
 	        }
 	        //---------RIGHT-CHANGE---------------------------------------------------------------------------//
-	        if(rightLeafright != null && nAuxright != null){
-	        	log +="rightLeaf.right = nAuxright => "+rightLeaf+"("+rightLeafright+")"+" = "+nAux+"("+nAuxright+")\n";
+	        if(rightLeaf.right != null && nAux.right != null){
+	        	log +="rightLeaf.right = nAuxright => "+rightLeaf+"("+rightLeaf.right+")"+" = "+nAux+"("+nAux.right+")\n";
 	        	if(printOnTerminal)
 		            System.out.println("rightLeaf.right = nAuxright => "+
-		                rightLeaf+"("+rightLeafright+")"+" = "+nAux+"("+nAuxright+")");
-	        }else if(rightLeafright == null){
-	        	log +="rightLeaf.right = nAux.right => "+"null"+" = "+nAux+"("+nAuxright+")\n";
+		                rightLeaf+"("+rightLeaf.right+")"+" = "+nAux+"("+nAux.right+")");
+	        }else if(rightLeaf.right == null){
+	        	log +="rightLeaf.right = nAux.right => "+"null"+" = "+nAux+"("+nAux.right+")\n";
 	        	if(printOnTerminal)
 		            System.out.println("rightLeaf.right = nAux.right => "+
-		                "null"+" = "+nAux+"("+nAuxright+")");
+		                "null"+" = "+nAux+"("+nAux.right+")");
 	        }else{
-	        	log +="rightLeaf.father = nAux.father => "+rightLeaf+"("+rightLeafright+")"+" = "+"null\n";
+	        	log +="rightLeaf.father = nAux.father => "+rightLeaf+"("+rightLeaf.right+")"+" = "+"null\n";
 	        	if(printOnTerminal)
 		            System.out.println("rightLeaf.father = nAux.father => "+
-		                rightLeaf+"("+rightLeafright+")"+" = "+"null");	
+		                rightLeaf+"("+rightLeaf.right+")"+" = "+"null");	
             }        
             //---------RIGHT-FATHER-CHANGE-----------------------------------------------------------------------//
 	        if(nAuxrightfather != null && rightLeaf != null){
-	        	log +="nAux.right.father = rightLeaf => "+nAuxright+"("+nAuxrightfather+")"+" = "+rightLeaf+"\n";
+	        	log +="nAux.right.father = rightLeaf => "+nAux.right+"("+nAuxrightfather+")"+" = "+rightLeaf+"\n";
 	        	if(printOnTerminal)
 		            System.out.println("nAux.right.father = rightLeaf => "+
-		                nAuxright+"("+nAuxrightfather+")"+" = "+rightLeaf);
+		                nAux.right+"("+nAuxrightfather+")"+" = "+rightLeaf);
 	        }else if(nAuxrightfather == null){
 	        	log +="nAux.right.father = rightLeaf => "+"null"+" = "+rightLeaf+"\n";
 	        	if(printOnTerminal)
 		            System.out.println("nAux.right.father = rightLeaf => "+
 		                "null"+" = "+rightLeaf);
 	        }else{
-	        	log +="nAux.right.father = rightLeaf => "+nAuxright+"("+nAuxrightfather+")"+" = "+"null\n";
+	        	log +="nAux.right.father = rightLeaf => "+nAux.right+"("+nAuxrightfather+")"+" = "+"null\n";
 	        	if(printOnTerminal)
 		            System.out.println("nAux.right.father = rightLeaf => "+
-		                nAuxright+"("+nAuxrightfather+")"+" = "+"null");
+		                nAux.right+"("+nAuxrightfather+")"+" = "+"null");
 	        }
 	        //---------FATHER-CHANGE---------------------------------------------------------------------------//
-	        if(leftLeaffather != null && nAuxfather != null){
-	        	log +="leftLeaf.father = nAux.father => "+leftLeaf+"("+leftLeaffather+")"+" = "+nAux+"("+nAuxfather+")\n";
+	        if(leftLeaf.father != null && nAux.father != null){
+	        	log +="leftLeaf.father = nAux.father => "+leftLeaf+"("+leftLeaf.father+")"+" = "+nAux+"("+nAux.father+")\n";
 	        	if(printOnTerminal)
 		            System.out.println("leftLeaf.father = nAux.father => "+
-		                leftLeaf+"("+leftLeaffather+")"+" = "+nAux+"("+nAuxfather+")");
-	        }else if(leftLeaffather == null){
-	        	log +="leftLeaf.father = nAux.father => "+"null"+" = "+nAux+"("+nAuxfather+")\n";
+		                leftLeaf+"("+leftLeaf.father+")"+" = "+nAux+"("+nAux.father+")");
+	        }else if(leftLeaf.father == null){
+	        	log +="leftLeaf.father = nAux.father => "+"null"+" = "+nAux+"("+nAux.father+")\n";
 	        	if(printOnTerminal)
 		            System.out.println("leftLeaf.father = nAux.father => "+
-		                "null"+" = "+nAux+"("+nAuxfather+")");
+		                "null"+" = "+nAux+"("+nAux.father+")");
 	        }else{
-	        	log +="leftLeaf.father = nAux.father => "+leftLeaf+"("+leftLeaffather+")"+" = "+"null\n";
+	        	log +="leftLeaf.father = nAux.father => "+leftLeaf+"("+leftLeaf.father+")"+" = "+"null\n";
 	        	if(printOnTerminal)
 		            System.out.println("leftLeaf.father = nAux.father => "+
-		                leftLeaf+"("+leftLeaffather+")"+" = "+"null");
+		                leftLeaf+"("+leftLeaf.father+")"+" = "+"null");
             }
 	    }
 	    return log;

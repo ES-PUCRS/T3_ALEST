@@ -163,7 +163,7 @@ public class RedBlackTree {
         	else
         		log.add(aux.element);
 
-            reOrganize(aux);
+            //reOrganize(aux);
             return aux;
         }
         if (n.element.compareTo(e) < 0) {
@@ -206,16 +206,11 @@ public class RedBlackTree {
                 Node rightLeaf = leftLeaf.right;
                 findSmallestRightLeaf(rightLeaf);
 
-                // * TODO
-                // Log desabilitado por hora. Não ta passando null por parametro e acerta exception NullPointer.
-                // Depois vou fazer um conversor do Node dessa classa pra um Node da classe Log.
-                //
-                // log.remove(nAux.element,
-                //            nAux.left.element, nAux.right.element, nAux.father.element, nAux.right.father.element,
-                //            leftLeaf.element,
-                //            leftLeaf.left.element, leftLeaf.father.element,
-                //            rightLeaf.element,
-                //            rightLeaf.right.element);
+                Integer nAuxrightfather = null;
+                if(nAux.right != null)
+                    if(nAux.right.father != null)
+                        nAuxrightfather = nAux.right.father.element;    
+                log.remove(nAux.export(), leftLeaf.export(), rightLeaf.export(), nAuxrightfather);
 
                 leftLeaf.left = nAux.left;
                 rightLeaf.right = nAux.right;
