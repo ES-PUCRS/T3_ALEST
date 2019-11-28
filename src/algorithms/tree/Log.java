@@ -36,20 +36,35 @@ public class Log{
         filePath += "\\SavedLogs\\" + "LogRuntime_" + dt.format(now) + ".txt";   
         
         logDateTime =  Paths.get(filePath);
+		String welcome = "";
 
 		try{
 			File logFile = new File(logDateTime.toString());
 
 			if(!logFile.exists()){
             	logFile.createNewFile();
-			
+
+				welcome = "Log file has been created on " +
+						  logDateTime.subpath((logDateTime.getNameCount()-3), (logDateTime.getNameCount()-1)) + 
+					 	  ",\nat file " +
+	  					  logDateTime.getFileName() + ".";
+
 				if(printOnTerminal)
-					System.out.println("New log file has been created: "
-											+ logDateTime.getFileName());
+					System.out.println(welcome + "\n");
 			}
 		
 			logDataWriter = new PrintWriter(new FileWriter(logFile, true));
-	        logDataWriter.println(logDateTime.getFileName() + "\n");
+	        logDataWriter.println(welcome);
+
+			String logEnviroment =
+				"\nProcessor: "+System.getenv("PROCESSOR_IDENTIFIER") 	+ ". " +
+				"\nComputer: " +System.getenv("COMPUTERNAME")	 		+ ", " +
+				"User: " + 		System.getenv("USERNAME") 				+ "."  +
+				"\nSystem: " +	System.getenv("OS") 					+ ", " +
+								System.getenv("NUMBER_OF_PROCESSORS")	+ " Core(s)," +
+				" v. " + 		System.getenv("PROCESSOR_REVISION") 	+ ".\n";
+
+			logDataWriter.append(logEnviroment);		
 	        logDataWriter.close();
         
         }catch(IOException x){

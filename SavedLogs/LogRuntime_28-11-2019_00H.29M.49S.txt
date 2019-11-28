@@ -1,0 +1,22 @@
+
+Log file has been created on T3_ALEST\SavedLogs,
+at file LogRuntime_28-11-2019_00H.29M.49S.txt.
+
+Processor: Intel64 Family 6 Model 60 Stepping 3, GenuineIntel. 
+Computer: DESKTOP-57377VS, User: cleys.
+System: Windows_NT, 4 Core(s), v. 3c03.
+
+00:29:49:712 - Added on root: {22}
+00:29:49:721 - Added: {22{L14'R'}}
+00:29:49:726 - Added: {22{R64'R'}}
+00:29:49:731 - Added: {14{L6'R'}}
+00:29:49:736 - Added: {64{L62'R'}}
+00:29:49:741 - Added: {64{R70'R'}}
+00:29:49:745 - Added: {6{R13'R'}}
+00:29:49:750 - Father: 64
+               Child: 62
+               Replace: null
+               
+00:29:49:755 - nAux: 64
+               rightLeaf: null
+               leftLeaf: 62
