@@ -23,6 +23,9 @@ public class app {
 
         System.out.println("\n\nTree: \n"+ b);
 
+        System.out.println("\n\n"+ b.drawTree());
+
+
         // for(int i = 15; i > 0 ; i -= 5){
         //     b.add(i);
         //     System.out.println("\n\nTree: \n"+ b);

@@ -24,6 +24,7 @@ public class Log{
 
 	private static DateTimeFormatter time;
 
+	private static final String command = "";
 	private boolean printOnTerminal = true;
 	private boolean log = true;
 
@@ -84,12 +85,13 @@ public class Log{
 			log += "Added on root: {" + added.element + "}";
 			if(printOnTerminal)
 	            System.out.println(log);
-    		publishLog(log);
+    		publishLog(command + log);
     	return log;
     }
     public String add(NodeLog father, NodeLog son){
     	String log = "";
-    			log += "Added: {" + father.element + "{";
+    			log += "Added: {" + father.element + "'"
+    							  + father.color + "'" +"{";
     			if(father.element > son.element)
     				log += "L";
 				else
@@ -97,11 +99,12 @@ public class Log{
 				log += son.element + "\'R\'}}"; 
     			if(printOnTerminal)
 		            System.out.println(log);
-    		publishLog(log);
+    		publishLog(command + log);
     	return log;
     }
 
 	public String remove(NodeLog nAux, NodeLog leftLeaf, NodeLog rightLeaf){
+		String log = "";
 		Integer nAuxI = null;
 		Integer leftLeafI = null;
 		Integer rightLeafI = null;
@@ -112,14 +115,14 @@ public class Log{
     	if(rightLeaf != null)
 			rightLeafI = rightLeaf.element;
 
-    	String paramLog ="nAux: " + nAuxI +
+    	String paramLog ="Remove: " + nAuxI +
 						 "\nrightLeaf: " + rightLeafI +
 						 "\nleftLeaf: " + leftLeafI;
 
 	 	if(printOnTerminal)
 	 		System.out.println(paramLog);
 
-		String log = paramLog;
+		log += paramLog;
 
 	    	if(nAux != null &&  leftLeaf != null && rightLeaf != null){
 			System.out.println("LOGGEDin");
@@ -200,43 +203,48 @@ public class Log{
 			                leftLeaf.element+"("+leftLeaf.father+")"+" = "+"null");
 	            }
 		    }           
-			publishLog(log);
+			publishLog(command + log);
 	    return log;
 	}
 
 	public String replaceChild(NodeLog father, NodeLog n, NodeLog r){
 		String log = "";
-            if(father != null){
-            	log += "Father: " + father.element + "\n";
-	        	if(printOnTerminal)
-                	System.out.println("Father: " + father.element);
-            }else{
-            	log += "Father: " + "null" + "\n";
-	        	if(printOnTerminal)
-               		System.out.println("Father: " + "null");
-            }if(n != null){
-            	log += "Child: " + n.element + "\n";
+
+			if(n != null){
+            	log += "Replace: " + n.element + "\n";
 	        	if(printOnTerminal)
                 	System.out.println("Child: " + n.element);
             }else{
-            	log += "Child: " + "null" + "\n";
+            	log += "Replace: " + "null" + "\n";
 	        	if(printOnTerminal)
                 	System.out.println("Child: " + "null");
-            }if(r != null){
-            	log += "Replace: " + r.element +"\n";
+            }
+
+            if(father != null){
+            	log += "On father: " + father.element + "\n";
+	        	if(printOnTerminal)
+                	System.out.println("Father: " + father.element);
+            }else{
+            	log += "On father: " + "null" + "\n";
+	        	if(printOnTerminal)
+               		System.out.println("Father: " + "null");
+            }
+
+            if(r != null){
+            	log += "With child: " + r.element +"\n";
 	        	if(printOnTerminal)
                 	System.out.println("Replace: " + r.element);
             }else
-            	log += "Replace: " + "null\n";
+            	log += "With child: " + "null\n";
 	        	if(printOnTerminal)
                 	System.out.println("Replace: " + "null\n");
 
-			publishLog(log);
+			publishLog(command + log);
         return log;    
 	}
 
 	public String replaceChild(NodeLog n, NodeLog r){
-		String log = "";
+		String log = ""; 
 		
 	    	if(n != null && r != null)
 	    		log += n.element + " replaced on root by " + r.element;
@@ -247,7 +255,7 @@ public class Log{
         	
         	if(printOnTerminal)
 	        	System.out.println(log);
-			publishLog(log);
+			publishLog(command + log);
         return log;   
 	}
 

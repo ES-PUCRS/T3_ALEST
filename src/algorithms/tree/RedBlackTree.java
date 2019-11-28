@@ -5,6 +5,7 @@ import src.algorithms.exceptions.EmptyTreeException;
 import src.algorithms.datastructures.LinkedList;
 import src.algorithms.datastructures.Queue;
 import src.algorithms.tree.NodeLog;
+import java.util.regex.Pattern;
 
 public class RedBlackTree {
     
@@ -208,10 +209,15 @@ public class RedBlackTree {
 
                 log.remove(exportLog(nAux), exportLog(leftLeaf), exportLog(rightLeaf));
 
-                leftLeaf.left = nAux.left;
-                rightLeaf.right = nAux.right;
-                nAux.right.father = rightLeaf;
-                leftLeaf.father = nAux.father;
+                if(leftLeaf != null && nAux != null)
+                    leftLeaf.left = nAux.left;
+                if(rightLeaf != null && nAux != null)
+                    rightLeaf.right = nAux.right;
+                if(nAux != null && nAux.right != null)
+                    nAux.right.father = rightLeaf;
+                if(leftLeaf != null && nAux != null)
+                    leftLeaf.father = nAux.father;
+                
                 replaceChild(nAux, leftLeaf);
             }
             //reOrganize();
@@ -539,13 +545,13 @@ public class RedBlackTree {
         if(root == null){
             throw new EmptyTreeException();
         }
-        Node n = root;
-        while(n != null){
-            n = n.right;
-        }
+        return getBiggestAux(root);
+    }
+    private Integer getBiggestAux(Node n) {
+        if(n.right != null)
+            return getBiggestAux(n.right);
         return n.element;
     }
-    
 
     /**
      * Remove um galho da árvore. A raiz deste galho eh o nodo que contem 
@@ -608,9 +614,97 @@ public class RedBlackTree {
         return line;
     }
 
+    public String drawTree(){
+        int size = ((int) (Math.log10(getBiggest()) + 1));
+        return drawTreeAux(root, size, height(), 0, "");
+    }
+    private String drawTreeAux(Node n, int size, int height, int column, String tree){
+        String ret = "";
+
+        if(height == column){
+            if(!Pattern.matches("[0-9]+", tree)){
+                return tree + "\n";
+            }else{
+                ret = "\n";
+                column = 0;
+            }
+        }
+
+        Slot slots[] = new Slot[5];
+
+        for(int i = 0; i < 5; i++){
+            if(i == 3 && n != null){
+                if(n.father != null){
+                    if(((height/level(n.element))/2) >= column){
+                        if(n.father.element > n.element && column < (height/2)){
+                            slots[i] = new Slot(size, n.element);
+                        }
+                    }
+                }else
+                    if((height/2) == column)
+                        slots[i] = new Slot(size, n.element);
+            }
+            slots[i] = new Slot(size);
+        }
+            
+        if(n == null)
+            return slotsToStrig(slots);
+
+        tree = drawTreeAux(n.left, size, height, 0, tree) + slotsToStrig(slots) + drawTreeAux(n.right, size, height, column++, tree) + ret;
+
+        return tree;
+    }
+
+    private static final class Slot {
+        public String value;
+        public int size;
+        public Slot(int size) {
+            this.size = size;
+            for(int i = size; i < 0; i--)
+                value += " ";
+        }
+        public Slot(int size, int value) {
+            String valueIn = "";
+            this.size = size;
+
+            int valueLength = (int) (Math.log10(value) + 1);
+            valueLength = (size - valueLength) / 2;
+
+            for(int i = size; i < 0; i--){
+                if(i == valueLength)
+                    valueIn += value;
+                valueIn += " ";
+            }
+
+            this.value = valueIn;
+        }
+        public Slot(int size, int value, int putOn) {
+            String valueIn = "";
+            this.size = size;
+
+            for(int i = size; i < 0; i--){
+                if(i == putOn)
+                    valueIn += value;
+                valueIn += " ";
+            }
+            
+            this.value = valueIn;
+        }
+    }
+
+    private String slotsToStrig(Slot[] slots){
+        String line = "";
+        
+        for(int i = 0; i < 5; i++)
+            line += slots[i].value;
+            
+        return line;
+    }
+
+
     private static NodeLog exportLog(Node n){
         if(n != null)
             return n.exportLog();
         return null;
     }
-} 
+}
