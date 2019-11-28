@@ -32,7 +32,7 @@ public class RedBlackTree {
 	   			color = 'R'; 
         }
 
-        public NodeLog export(){
+        public NodeLog exportLog(){
             Integer father = null;
             Integer right = null;
             Integer left = null;
@@ -159,9 +159,9 @@ public class RedBlackTree {
             aux.father = father;
 
             if(father != null)
-        		log.add(father.element, aux.element);
+        		log.add(exportLog(father), exportLog(aux));
         	else
-        		log.add(aux.element);
+        		log.add(exportLog(aux));
 
             //reOrganize(aux);
             return aux;
@@ -206,11 +206,7 @@ public class RedBlackTree {
                 Node rightLeaf = leftLeaf.right;
                 findSmallestRightLeaf(rightLeaf);
 
-                Integer nAuxrightfather = null;
-                if(nAux.right != null)
-                    if(nAux.right.father != null)
-                        nAuxrightfather = nAux.right.father.element;    
-                log.remove(nAux.export(), leftLeaf.export(), rightLeaf.export(), nAuxrightfather);
+                log.remove(exportLog(nAux), exportLog(leftLeaf), exportLog(rightLeaf));
 
                 leftLeaf.left = nAux.left;
                 rightLeaf.right = nAux.right;
@@ -232,7 +228,8 @@ public class RedBlackTree {
             // Log desabilitado por hora. Não ta passando null por parametro e acerta exception NullPointer.
             // Depois vou fazer um conversor do Node dessa classa pra um Node da classe Log.
             //
-            //log.replaceChild(father.element, n.element, r.element);
+
+            log.replaceChild(exportLog(father), exportLog(n), exportLog(r));
             
             if(father.left != null && father.left.element == n.element)
                 father.left = r;
@@ -259,16 +256,18 @@ public class RedBlackTree {
             if(brother != null)
 	            add(brother.element);
     
-            log.replaceChild(n.element, r.element);
+            log.replaceChild(exportLog(n), exportLog(r));
         }
     }
     private void findBiggestLeftLeaf(Node n){
-        if(n.right != null)
-            findBiggestLeftLeaf(n = n.right);
+        if(n != null)
+            if(n.right != null)
+                findBiggestLeftLeaf(n = n.right);
     }
     private void findSmallestRightLeaf(Node n){
-        if(n.left != null)
-            findSmallestRightLeaf(n = n.left);
+        if(n != null)
+            if(n.left != null)
+                findSmallestRightLeaf(n = n.left);
     }
 
 
@@ -607,5 +606,11 @@ public class RedBlackTree {
         }
         line += "}";
         return line;
+    }
+
+    private static NodeLog exportLog(Node n){
+        if(n != null)
+            return n.exportLog();
+        return null;
     }
 } 

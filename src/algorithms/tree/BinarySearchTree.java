@@ -7,8 +7,6 @@ import src.algorithms.exceptions.NodeNotFoundException;
 
 public class BinarySearchTree {
     
-    public static Log log;
-
     // Classe interna privada
     private static final class Node {
         public Integer element;
@@ -31,7 +29,6 @@ public class BinarySearchTree {
 
     // Metodos
     public BinarySearchTree() {
-        log = log.getInstance();
         count = 0;
         root = null;
     }
@@ -130,17 +127,6 @@ public class BinarySearchTree {
                 Node rightLeaf = leftLeaf.right;
                 findSmallestRightLeaf(rightLeaf);
 
-                // * TODO
-                // Log desabilitado por hora. Não ta passando null por parametro e acerta exception NullPointer.
-                // Depois vou fazer um conversor do Node dessa classa pra um Node da classe Log.
-                //
-                // log.remove(nAux.element,
-                //            nAux.left.element, nAux.right.element, nAux.father.element, nAux.right.father.element,
-                //            leftLeaf.element,
-                //            leftLeaf.left.element, leftLeaf.father.element,
-                //            rightLeaf.element,
-                //            rightLeaf.right.element);
-
                 leftLeaf.left = nAux.left;
                 rightLeaf.right = nAux.right;
                 nAux.right.father = rightLeaf;
@@ -155,12 +141,6 @@ public class BinarySearchTree {
         
         if(n != null && n.father != null){
             Node father = n.father;
-
-            // * TODO
-            // Log desabilitado por hora. Não ta passando null por parametro e acerta exception NullPointer.
-            // Depois vou fazer um conversor do Node dessa classa pra um Node da classe Log.
-            //
-            //log.replaceChild(father.element, n.element, r.element);
             
             if(father.left != null && father.left.element == n.element)
                 father.left = r;
@@ -169,8 +149,7 @@ public class BinarySearchTree {
             else
                 throw new NodeNotFoundException("Node father ("+father.element+") does not have "+n.element+" Node to replace by "+r.element+"Node");
         }else if (n.element == root.element && r != null){
-            root = r; 
-            log.replaceChild(n.element, r.element);
+            root = r;
         }
     }
     private void findBiggestLeftLeaf(Node n){
