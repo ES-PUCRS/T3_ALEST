@@ -1,6 +1,5 @@
 package src.algorithms.tree;
 
-
 import src.exceptions.NodeNotFoundException;
 import src.exceptions.EmptyTreeException;
 import src.exceptions.ExceptionHandler;
@@ -214,6 +213,8 @@ public class RedBlackTree {
                 findSmallestRightLeaf(rightLeaf);
 
                 log.remove(exportLog(nAux), exportLog(leftLeaf), exportLog(rightLeaf));
+
+                System.out.println(rightLeaf.right.element);
 
                 if(leftLeaf != null && nAux != null)
                     leftLeaf.left = nAux.left;
@@ -521,7 +522,7 @@ public class RedBlackTree {
         } else {
             return 1 + countNodes(n.left) + countNodes(n.right);
         }
-    }  
+    }
     
 
     /**
@@ -617,108 +618,6 @@ public class RedBlackTree {
                 line += ", " + toStringAux(n.right);
         }
         line += "}";
-        return line;
-    }
-
-    public String drawTree(){
-        int size = ((int) (Math.log10(getBiggest()) + 1));
-        return drawTreeAux(root, size, height(), 0, 0, "");
-    }
-    private String drawTreeAux(Node n, int size, int height, int column, int fatherColumn, String tree){
-        String ret = "";
-
-        if(height == column){
-            if(!Pattern.matches("[0-9]+", tree)){
-                return tree + "\n";
-            }else{
-                ret = "\n";
-                column = 0;
-            }
-        }
-
-        Queue<Slot> slots = new Queue();
-        slots.enqueue(new Slot (size, n.element));
-        Slot s = slots.dequeue();
-
-        System.out.println(slotsToStrig(slots));
-        // for(int i = 0; i < 5; i++){
-        //     if(i == 3 && n != null){
-
-        //         if(isRoot(n.element) && column == (height/2)){
-        //             slots[i] = new Slot(size, n.element);
-        //             fatherColumn = i;
-
-        //         }else if(!isRoot(n.element)){
-                    
-        //             if(n.father == null)
-        //                 throw new NodeNotFoundException("There is no father on this node");
-        //             else if(n.father.element > n.element && column == (fatherColumn - 1))
-        //                 slots[i] = new Slot(size, n.element);
-        //             else if(n.father.element < n.element && column == (fatherColumn + 1))
-        //                 slots[i] = new Slot(size, n.element);
-        //         }
-
-        //     }
-        //     slots[i] = new Slot(size);
-        // }
-            
-        // if(n == null)
-        //     return slotsToStrig(slots);
-
-        // tree = drawTreeAux(n.left, size, height, column++, fatherColumn, tree) + slotsToStrig(slots) + drawTreeAux(n.right, size, height, column++, fatherColumn, tree) + ret;
-
-        return tree;
-    }
-
-    private static final class Slot {
-        public String value;
-        public int size;
-        public Slot(int size) {
-            this.size = size;
-            this.value = "";
-            for(int i = size; i < 0; i--)
-                value += "a";
-        }
-        public Slot(int size, int value) {
-            String valueIn = "";
-            this.size = size;
-            int valueLength = (int) (Math.log10(value) + 1);
-            valueLength = (size - valueLength) / 2;
-            System.out.println("VALUE => " + value);
-            this.value = "" + value;;
-                throw new NullPointerException("tama na boga");
-
-            // for(int i = size; i < 0; i--){
-            //     if(i == valueLength)
-            //         valueIn += "" + value;
-            //     valueIn += ".";
-            // }
-
-            //this.value = valueIn;
-        }
-        public Slot(int size, int value, int putOn) {
-            String valueIn = "";
-            this.size = size;
-
-            for(int i = size; i < 0; i--){
-                if(i == putOn)
-                    valueIn += value;
-                valueIn += " ";
-            }
-            
-            this.value = valueIn;
-        }
-    }
-
-    private String slotsToStrig(Queue<Slot> slots){
-        String line = "";
-        Slot s = null;
-
-        while(!slots.isEmpty()){
-            s = slots.dequeue();
-            line += s.value;
-        }
-
         return line;
     }
 

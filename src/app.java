@@ -8,7 +8,6 @@ public class app {
         RedBlackTree b = new RedBlackTree();
 
         b.add(22);
-
         b.add(14);
         b.add(64);
         b.add(6);
@@ -16,14 +15,10 @@ public class app {
         b.add(70);
         b.add(13);
 
-
-        System.out.println("\n\nTree: \n"+ b);
-
         b.remove(64);
 
         System.out.println("\n\nTree: \n"+ b);
 
-        System.out.println("\n\n"+ b.drawTree());
 
 
         // for(int i = 15; i > 0 ; i -= 5){
