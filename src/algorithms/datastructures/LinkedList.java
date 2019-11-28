@@ -1,5 +1,7 @@
 package src.algorithms.datastructures;
 
+import src.exceptions.ExceptionHandler;
+
 public class LinkedList<T>{
 
     // Classe interna Node
@@ -293,5 +295,9 @@ public class LinkedList<T>{
         }
 
         return s.toString();
+    }
+
+    private static void setExceptionWay(){
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
     }
 }

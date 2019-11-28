@@ -1,4 +1,4 @@
-package src.algorithms.tree;
+package src;
 
 import src.algorithms.tree.NodeLog;
 
@@ -258,6 +258,16 @@ public class Log{
 			publishLog(command + log);
         return log;   
 	}
+
+
+	public void exception(Thread t, Throwable e){
+		String exception = "THROWN EXCEPTION\n";
+		exception += "Thread "+ t.getId() +", " + t.getState() + "\n";
+		exception += e.toString();
+
+		publishLog(exception);
+	}
+
 
 	private void publishLog(String data){
 		if(data == null)

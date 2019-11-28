@@ -1,11 +1,16 @@
 package src.algorithms.tree;
 
-import src.algorithms.exceptions.NodeNotFoundException;
-import src.algorithms.exceptions.EmptyTreeException;
+
+import src.exceptions.NodeNotFoundException;
+import src.exceptions.EmptyTreeException;
+import src.exceptions.ExceptionHandler;
+
 import src.algorithms.datastructures.LinkedList;
 import src.algorithms.datastructures.Queue;
 import src.algorithms.tree.NodeLog;
 import java.util.regex.Pattern;
+
+import src.Log;
 
 public class RedBlackTree {
     
@@ -65,7 +70,8 @@ public class RedBlackTree {
 
     // Metodos
     public RedBlackTree() {
-        log = log.getInstance();
+        log = Log.getInstance();
+        setExceptionWay();
         count = 0;
         root = null;
     }
@@ -616,9 +622,9 @@ public class RedBlackTree {
 
     public String drawTree(){
         int size = ((int) (Math.log10(getBiggest()) + 1));
-        return drawTreeAux(root, size, height(), 0, "");
+        return drawTreeAux(root, size, height(), 0, 0, "");
     }
-    private String drawTreeAux(Node n, int size, int height, int column, String tree){
+    private String drawTreeAux(Node n, int size, int height, int column, int fatherColumn, String tree){
         String ret = "";
 
         if(height == column){
@@ -630,27 +636,36 @@ public class RedBlackTree {
             }
         }
 
-        Slot slots[] = new Slot[5];
+        Queue<Slot> slots = new Queue();
+        slots.enqueue(new Slot (size, n.element));
+        Slot s = slots.dequeue();
 
-        for(int i = 0; i < 5; i++){
-            if(i == 3 && n != null){
-                if(n.father != null){
-                    if(((height/level(n.element))/2) >= column){
-                        if(n.father.element > n.element && column < (height/2)){
-                            slots[i] = new Slot(size, n.element);
-                        }
-                    }
-                }else
-                    if((height/2) == column)
-                        slots[i] = new Slot(size, n.element);
-            }
-            slots[i] = new Slot(size);
-        }
+        System.out.println(slotsToStrig(slots));
+        // for(int i = 0; i < 5; i++){
+        //     if(i == 3 && n != null){
+
+        //         if(isRoot(n.element) && column == (height/2)){
+        //             slots[i] = new Slot(size, n.element);
+        //             fatherColumn = i;
+
+        //         }else if(!isRoot(n.element)){
+                    
+        //             if(n.father == null)
+        //                 throw new NodeNotFoundException("There is no father on this node");
+        //             else if(n.father.element > n.element && column == (fatherColumn - 1))
+        //                 slots[i] = new Slot(size, n.element);
+        //             else if(n.father.element < n.element && column == (fatherColumn + 1))
+        //                 slots[i] = new Slot(size, n.element);
+        //         }
+
+        //     }
+        //     slots[i] = new Slot(size);
+        // }
             
-        if(n == null)
-            return slotsToStrig(slots);
+        // if(n == null)
+        //     return slotsToStrig(slots);
 
-        tree = drawTreeAux(n.left, size, height, 0, tree) + slotsToStrig(slots) + drawTreeAux(n.right, size, height, column++, tree) + ret;
+        // tree = drawTreeAux(n.left, size, height, column++, fatherColumn, tree) + slotsToStrig(slots) + drawTreeAux(n.right, size, height, column++, fatherColumn, tree) + ret;
 
         return tree;
     }
@@ -660,23 +675,26 @@ public class RedBlackTree {
         public int size;
         public Slot(int size) {
             this.size = size;
+            this.value = "";
             for(int i = size; i < 0; i--)
-                value += " ";
+                value += "a";
         }
         public Slot(int size, int value) {
             String valueIn = "";
             this.size = size;
-
             int valueLength = (int) (Math.log10(value) + 1);
             valueLength = (size - valueLength) / 2;
+            System.out.println("VALUE => " + value);
+            this.value = "" + value;;
+                throw new NullPointerException("tama na boga");
 
-            for(int i = size; i < 0; i--){
-                if(i == valueLength)
-                    valueIn += value;
-                valueIn += " ";
-            }
+            // for(int i = size; i < 0; i--){
+            //     if(i == valueLength)
+            //         valueIn += "" + value;
+            //     valueIn += ".";
+            // }
 
-            this.value = valueIn;
+            //this.value = valueIn;
         }
         public Slot(int size, int value, int putOn) {
             String valueIn = "";
@@ -692,12 +710,15 @@ public class RedBlackTree {
         }
     }
 
-    private String slotsToStrig(Slot[] slots){
+    private String slotsToStrig(Queue<Slot> slots){
         String line = "";
-        
-        for(int i = 0; i < 5; i++)
-            line += slots[i].value;
-            
+        Slot s = null;
+
+        while(!slots.isEmpty()){
+            s = slots.dequeue();
+            line += s.value;
+        }
+
         return line;
     }
 
@@ -706,5 +727,10 @@ public class RedBlackTree {
         if(n != null)
             return n.exportLog();
         return null;
+    }
+
+
+    private static void setExceptionWay(){
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
     }
 }

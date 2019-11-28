@@ -1,4 +1,4 @@
-package src.algorithms.exceptions;
+package src.exceptions;
 
 public class EmptyQueueException extends RuntimeException {
 

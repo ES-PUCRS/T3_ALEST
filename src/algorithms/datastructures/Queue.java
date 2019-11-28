@@ -1,6 +1,7 @@
 package src.algorithms.datastructures;
 
-import src.algorithms.exceptions.EmptyQueueException;
+import src.exceptions.EmptyQueueException;
+import src.exceptions.ExceptionHandler;
 
 import java.util.LinkedList;
 
@@ -10,6 +11,7 @@ public class Queue<E> {
 
     public Queue() {
         fila = new LinkedList<E>();
+        setExceptionWay();
     }
 
     public int size() {
@@ -44,5 +46,9 @@ public class Queue<E> {
 
     public void clear() {
         fila.clear();
+    }
+
+    private static void setExceptionWay(){
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
     }
 }
