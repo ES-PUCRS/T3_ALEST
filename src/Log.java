@@ -3,6 +3,7 @@ package src;
 import src.algorithms.tree.NodeLog;
 
 import java.io.FileNotFoundException;
+import java.lang.StackTraceElement;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -261,9 +262,15 @@ public class Log{
 
 
 	public void exception(Thread t, Throwable e){
+		StackTraceElement[] stack = e.getStackTrace();
 		String exception = "THROWN EXCEPTION\n";
+		String message = e.getLocalizedMessage();
+
+		if(message == null)
+			message = "";
+
 		exception += "Thread "+ t.getId() +", " + t.getState() + "\n";
-		exception += e.toString();
+		exception += message + "\n" + stack[0].toString() + "\n" + stack[stack.length-1].toString();
 
 		publishLog(exception);
 	}

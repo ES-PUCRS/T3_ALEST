@@ -66,7 +66,7 @@ public class RedBlackTree {
     private int count; //contador do numero de nodos
     private Node root; //referencia para o nodo raiz
 
-
+    // https://www.youtube.com/watch?v=0lWsHUiAcOc
     // Metodos
     public RedBlackTree() {
         log = Log.getInstance();
@@ -75,42 +75,106 @@ public class RedBlackTree {
         root = null;
     }
 
-    private void reOrganize(Node lastIn){
-    	if(isRoot(lastIn.element))
-    		lastIn.color = 'B';
+    private void reOrganize(Node z){
+        reOrganizeAux(z);
+    }
+    private boolean reOrganize(Node z){
+        if(z == null)
+            return true;
+        
+        boolean changed = false;
 
-		if(lastIn.father != null){
-			Node father = lastIn.father;
-		
-			if(father.father != null){
-				Node grandpa = father.father;
-				Node brother = null;
+        if(z.father == null && z.color == 'R'){
+            z.rePaint();
+            changed = true;
+        }
 
-				replaceChild(grandpa, father);
+         
+        
+        if(z.father != null){
+            Node father = z.father;
+            if(father.father != null)
+                Node grandpa = father.father;
+        }
+        
 
-				if(lastIn.element < father.element &&
-				   father.element < grandpa.element){ // /*/
-				   	if(father.right != null)
-						brother = father.right;
-					father.right = grandpa;
+        //Case 1
+        if(grandpa.element > father.element){
+            if(grandpa.right == null || grandpa.right.color == 'B')
+                if(father.element > z.element){
+                    leftRotation(father, z);
+                    changed = true;
+                }
+                
+        }else{
+            if(grandpa.left == null || grandpa.left.color == 'B')
+                if(father.element < z.element){
+                    rightRotation(father, z)
+                    changed = true
+                }
+                    
+        }
 
-				}else if(lastIn.element > father.element &&
-				         father.element > grandpa.element){ /* \*\ */
-					if(father.left != null)
-						brother = father.left;
-					father.left = grandpa;
-				}
-				father.father = grandpa.father;
-				grandpa.father = father;
-				grandpa.rePaint();
-				father.rePaint();
-				if(brother != null)
-					add(brother.element);
-			}
-		}
+        //Case 3
+        if(grandpa.color == 'B'){
+            if(grandpa.element > father.element){
+                if(father.element > z.element){
+                    rightRotation(grandpa, father);
+                    grandpa.rePaint();
+                    father.rePaint();
+                    changed = true;
+                }
+            }else{
+                if(father.element < z.element){
+                    leftRotation(grandpa, father);
+                    grandpa.rePaint();
+                    father.rePaint();
+                    changed = true;
+                }
+            }
+        }
 
+        reOrganizeAux(z.left);
+        reOrganizeAux(z.right);
+
+        if(changed)
+            return reOrganize(root);
+        return false;
     }
 
+    private void leftRotation(Node x, Node y){
+        if(x.father == null){
+            root = y;
+            y.father = null;
+        }else{
+            if(x.father.element > x.element)
+                x.father.left = y;
+            else
+                x.father.right = y;
+
+            y.father = x.father;
+        }
+            x.father = y;
+            x.right = y.left;
+            y.left = x;
+    }
+
+    private void rightRotation(Node x, Node y){
+        if(y.father == null){
+            root = x;
+            x.father = null;
+        }else{
+            if(y.father.element > y.element)
+                y.father.left = y;
+            else
+                y.father.right = x;
+
+            x.father = y.father;
+        }
+            y.father = x;
+            y.right = x.left;
+            x.left = y;
+    }
 
     private Node searchNodeRef(Integer element, Node target) {
         int r;
@@ -169,12 +233,12 @@ public class RedBlackTree {
         	else
         		log.add(exportLog(aux));
 
-            //reOrganize(aux);
+                reOrganize(aux);
             return aux;
         }
         if (n.element.compareTo(e) < 0) {
             n.right = add(n.right, e, n);
-        } else {
+        } else if (n.element.compareTo(e) > 0){
             n.left = add(n.left, e, n);
         }
         return n;
@@ -187,60 +251,88 @@ public class RedBlackTree {
      * @return true se achou o elemento e fez a remocao, e false caso 
      * contrario.
      */
+    
+    /**
+     * Remove da arvore o elemento passado como parametro, mantendo as
+     * propriedades da ABP.
+     *
+     * @param element elemento a ser removido.
+     * @return true se achou o elemento e fez a remocao, e false caso
+     * contrario.
+     */
+
     public boolean remove(Integer element) {
-        Node nAux = searchNodeRef(element, root);
-        if(nAux != null) {
+        if (element == null) return false;
+        if (isEmpty()) return false;
 
-            if(nAux.left == null && nAux.right == null){
-                replaceChild(nAux, null);
+        Node aRemover = searchNodeRef(element, root);
+        if (aRemover == null) return false;
 
-            } else {
-                
-                Node leftLeaf = nAux;
-
-                if(nAux.left != null) {
-                    leftLeaf = nAux.left;
-                    findBiggestLeftLeaf(leftLeaf);
-                    replaceChild(leftLeaf, leftLeaf.left);
-
-                } else {
-                    leftLeaf = nAux.right;
-                    findSmallestRightLeaf(leftLeaf);
-                    replaceChild(leftLeaf, leftLeaf.right);
-                }
-
-                Node rightLeaf = leftLeaf.right;
-                findSmallestRightLeaf(rightLeaf);
-
-                log.remove(exportLog(nAux), exportLog(leftLeaf), exportLog(rightLeaf));
-
-                System.out.println(rightLeaf.right.element);
-
-                if(leftLeaf != null && nAux != null)
-                    leftLeaf.left = nAux.left;
-                if(rightLeaf != null && nAux != null)
-                    rightLeaf.right = nAux.right;
-                if(nAux != null && nAux.right != null)
-                    nAux.right.father = rightLeaf;
-                if(leftLeaf != null && nAux != null)
-                    leftLeaf.father = nAux.father;
-                
-                replaceChild(nAux, leftLeaf);
-            }
-            //reOrganize();
-            return true;
-        }
-        return false;
+        remove(aRemover);
+        count--;
+        return true;
     }
+
+    private void remove(Node n) {
+        Node pai = n.father;
+
+        //exclusão de folha
+        if (n.left == null && n.right == null) {
+            if (n == root) {
+                root = null;
+                root.father = null;
+            } else {
+                if (pai.left == n)
+                    pai.left = null;
+                else
+                    pai.right = null;
+            }
+        }
+
+        //exclusão de um nodo com filho à direita
+        else if (n.right != null && n.left == null) {
+            if (n == root) {
+                root = n.right;
+                root.father = null;
+            } else {
+                if (pai.left == n) {
+                    pai.left = n.right;
+                } else {
+                    pai.right = n.right;
+                }
+                n.right.father = pai;
+            }
+        }
+
+        //exclusão de um nodo com filho à esquerda
+        else if (n.right == null && n.left != null) {
+            if (n == root) {
+                root = n.left;
+                root.father = null;
+            } else {
+                if (pai.left == n) {
+                    pai.left = n.left;
+                } else {
+                    pai.right = n.left;
+                }
+                n.left.father = pai;
+            }
+
+        }
+
+        //exclusão de um nodo com 2 filhos
+        else {
+            Node menor = smallest(n.right);
+            n.element = menor.element;
+            remove(menor);
+        }
+    }
+
+
     private void replaceChild(Node n, Node r){
         
         if(n != null && n.father != null){
             Node father = n.father;
-
-            // * TODO
-            // Log desabilitado por hora. Não ta passando null por parametro e acerta exception NullPointer.
-            // Depois vou fazer um conversor do Node dessa classa pra um Node da classe Log.
-            //
 
             log.replaceChild(exportLog(father), exportLog(n), exportLog(r));
             
@@ -279,6 +371,7 @@ public class RedBlackTree {
     }
     private void findSmallestRightLeaf(Node n){
         if(n != null)
+            System.out.println("agola é: " + n.element);
             if(n.left != null)
                 findSmallestRightLeaf(n = n.left);
     }
@@ -593,7 +686,7 @@ public class RedBlackTree {
 
 
     @Override
-    public String toString(){        
+    public String toString(){      
         if(root == null)
             return "{}";
         return toStringAux(root);
@@ -601,6 +694,13 @@ public class RedBlackTree {
     private String toStringAux(Node n){
         String line = "{";
         if(n != null){
+
+            // if(n.element == 70){
+            //     System.out.println("pai: " + n.element);
+            //     System.out.println("mae: " + n.father.element);
+            //     System.out.println("right: " + n.right.element);
+            //     System.out.println("irmao: " + n.left.element);
+            // }
 
         	if(n.father != null){
 	        	if(n.father.element > n.element)

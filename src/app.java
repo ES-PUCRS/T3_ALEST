@@ -8,14 +8,9 @@ public class app {
         RedBlackTree b = new RedBlackTree();
 
         b.add(22);
-        b.add(14);
-        b.add(64);
-        b.add(6);
-        b.add(62);
-        b.add(70);
-        b.add(13);
-
-        b.remove(64);
+        b.add(3);
+        b.add(23);
+        b.add(21);
 
         System.out.println("\n\nTree: \n"+ b);
 

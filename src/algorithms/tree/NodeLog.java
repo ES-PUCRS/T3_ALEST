@@ -19,6 +19,7 @@ public class NodeLog{
         this.right = right;
         this.left = left;	        
         this.color = color;
-        this.element = element;
+        this.element = element;     
+
     }
 }
