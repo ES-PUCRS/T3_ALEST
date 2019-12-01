@@ -75,42 +75,49 @@ public class RedBlackTree {
         root = null;
     }
 
-    private void reOrganize(Node z){
-        reOrganizeAux(z);
+    private void reOrganize(Node n){
+        reOrganizeAux(n);
     }
-    private boolean reOrganize(Node z){
-        if(z == null)
-            return true;
+    private void reOrganizeAux(Node n){
+        if(n == null)
+            return;
         
-        boolean changed = false;
-
-        if(z.father == null && z.color == 'R'){
-            z.rePaint();
-            changed = true;
+        if(n.father == null && n.color == 'R'){
+            n.rePaint();
+            reOrganizeAux(root);
         }
-
-         
         
-        if(z.father != null){
-            Node father = z.father;
-            if(father.father != null)
-                Node grandpa = father.father;
+        Node father = null, grandpa = null;
+        
+        if(n.father != null){
+            father = n.father;
+
+            if(father.color == 'R')
+                if(n.color != 'B'){
+                    n.rePaint(); 
+                    reOrganizeAux(root);
+                }
+             
+
+            if(father.father != null){
+                grandpa = father.father;
+            }
         }
         
 
         //Case 1
         if(grandpa.element > father.element){
             if(grandpa.right == null || grandpa.right.color == 'B')
-                if(father.element > z.element){
-                    leftRotation(father, z);
-                    changed = true;
+                if(father.element > n.element){
+                    leftRotation(father, n);
+                    reOrganizeAux(root);
                 }
                 
         }else{
             if(grandpa.left == null || grandpa.left.color == 'B')
-                if(father.element < z.element){
-                    rightRotation(father, z)
-                    changed = true
+                if(father.element < n.element){
+                    rightRotation(father, n);
+                    reOrganizeAux(root);
                 }
                     
         }
@@ -118,28 +125,24 @@ public class RedBlackTree {
         //Case 3
         if(grandpa.color == 'B'){
             if(grandpa.element > father.element){
-                if(father.element > z.element){
+                if(father.element > n.element){
                     rightRotation(grandpa, father);
                     grandpa.rePaint();
                     father.rePaint();
-                    changed = true;
+                    reOrganizeAux(root);
                 }
             }else{
-                if(father.element < z.element){
+                if(father.element < n.element){
                     leftRotation(grandpa, father);
                     grandpa.rePaint();
                     father.rePaint();
-                    changed = true;
+                    reOrganizeAux(root);
                 }
             }
         }
 
-        reOrganizeAux(z.left);
-        reOrganizeAux(z.right);
-
-        if(changed)
-            return reOrganize(root);
-        return false;
+        reOrganizeAux(n.left);
+        reOrganizeAux(n.right);
     }
 
     private void leftRotation(Node x, Node y){
