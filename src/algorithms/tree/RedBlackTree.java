@@ -111,7 +111,7 @@ public class RedBlackTree {
                                 return reOrganizeAux(root);
                            }     
                     }else{
-                        if(grandpa.left != null && grandpa.left.color == 'R'){
+                        if(father.color != 'B' && grandpa.left != null && grandpa.left.color == 'R'){
                                 grandpa.left.rePaint();
                                 grandpa.rePaint();
                                 father.rePaint();
@@ -130,14 +130,18 @@ public class RedBlackTree {
                        
                             if(grandpa.right == null || grandpa.right.color == 'B')
                                 if(father.element > n.element){
-                                    rightRotation(father, n);
-
-                                    log.reOCase2(exportLog(n), exportLog(father), "right");
-                                    return reOrganizeAux(root);
-                                }else{
-                                    leftRotation(grandpa, father);
+                                    rightRotation(grandpa, father);
+                                        System.out.println("Case 1, first stop");
                                     grandpa.rePaint();
                                     father.rePaint();
+                                       
+
+                                    log.reOCase2(exportLog(grandpa), exportLog(father), "right");
+                                    return reOrganizeAux(root);
+                                }else{
+                                        System.out.println("Case 1, second stop");
+                                    leftRotation(father, n);
+
 
                                     log.reOCase2(exportLog(n), exportLog(father), "left");
                                     return reOrganizeAux(root);
@@ -146,6 +150,7 @@ public class RedBlackTree {
                     }else{
                             if(grandpa.left == null || grandpa.left.color == 'B')
                                 if(father.element < n.element){
+                                        System.out.println("Case 1, third stop");
                                     leftRotation(grandpa, father);
                                     grandpa.rePaint();
                                     father.rePaint();
@@ -153,6 +158,7 @@ public class RedBlackTree {
                                     log.reOCase2(exportLog(grandpa), exportLog(father), "left");
                                     return reOrganizeAux(root);
                                 }else{
+                                        System.out.println("Case 1, fourth stop");
                                     rightRotation(father, n);
 
                                     log.reOCase2(exportLog(n), exportLog(father), "right");
@@ -191,7 +197,8 @@ public class RedBlackTree {
     }
 
     private void leftRotation(Node father, Node n){
-        if(father == null){
+        System.out.println("print here");
+        if(father.father == null){
             father.father = n;
             n.father = null;
             root = n;
@@ -218,15 +225,18 @@ public class RedBlackTree {
             // System.out.println("right: " + father.right.element + "\n");
 
             // System.out.println("\nNode: " + n.element);
+            // if(n.father != null)
             // System.out.println("father: " + n.father.element);
             // if(n.left != null)
             // System.out.println("left: " + n.left.element);
             // if(n.right != null)
             // System.out.println("right: " + n.right.element + "\n");
 
+            // if(n.father != null){
             // System.out.println("\nNode: " + n.father.element);
-            // if(n.father.father != null)
-            // System.out.println("father: " + n.father.father.element);
+            //     if(n.father.father != null)
+            //     System.out.println("father: " + n.father.father.element);
+            // }
             // if(n.father.left != null)
             // System.out.println("left: " + n.father.left.element);
             // if(n.father.right != null)
@@ -234,7 +244,7 @@ public class RedBlackTree {
     }
 
     private void rightRotation(Node father, Node n){
-        if(father == null){
+        if(father.father == null){
             father.father = n;
             n.father = null;
             root = n;
