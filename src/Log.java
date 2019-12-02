@@ -81,6 +81,114 @@ public class Log{
         return instance;
     }
 
+    public String reOFatherColor(NodeLog n, NodeLog father){
+    	String log = "Painted: \n";
+    	log += "Father ("+ father.element +")";
+    	if(father.color == 'R')
+    			log += " Red"; 
+    		else
+    			log += " Black";
+    	log += "\nChild ("+ n.element +")";
+    	if(n.color == 'R')
+    		log += " Black changed to " + n.color + "ed";
+    	else
+    		log += " Red changed to " + n.color + "lack";
+
+			if(printOnTerminal)
+	            System.out.println(log);
+    		publishLog(command + log);
+    	return log;
+    }
+
+
+    public String reORootColor(NodeLog n){
+    	String log = "";
+    	log += "Painted: Root ("+ n.element +") to black";
+    	
+			if(printOnTerminal)
+	            System.out.println(log);
+    		publishLog(command + log);
+    	return log;
+    }
+
+    public String reOCase1(NodeLog n, NodeLog father, NodeLog grandpa){
+    	String log = "";
+    	log += "Painted, case 1: \n";
+
+    	log += "Grandfather ("+ grandpa.element +")";
+    	if(grandpa.color == 'R')
+    		log += " Black changed to " + grandpa.color + "ed\n";
+    	else
+    		log += " Red changed to " + grandpa.color + "lack\n";
+
+    	log += "Father ("+ father.element +")";
+    	if(father.color == 'R')
+    		log += " Black changed to " + father.color + "ed\n";
+    	else
+    		log += " Red changed to " + father.color + "lack\n";
+
+    	log += "Uncle ("+ n.element +")";
+    	if(n.color == 'R')
+    		log += " Black changed to " + n.color + "ed";
+    	else
+    		log += " Red changed to " + n.color + "lack";
+
+    	
+			if(printOnTerminal)
+	            System.out.println(log);
+    		publishLog(command + log);
+    	return log;
+    }
+
+    public String reOCase2(NodeLog n, NodeLog father, String direction){
+    	String log = "";
+    	log += "Rotated, case 2: " + father.element + " rotated to " + direction + " with " + n.element;
+    	
+    	if(direction == "left"){
+
+	    	log += "\nGrandfather ("+ n.element +")";
+	    	if(n.color == 'R')
+	    		log += " Black changed to " + n.color + "ed\n";
+	    	else
+	    		log += " Red changed to " + n.color + "lack\n";
+
+	    	log += "Father ("+ father.element +")";
+	    	if(father.color == 'R')
+	    		log += " Black changed to " + father.color + "ed\n";
+	    	else
+	    		log += " Red changed to " + father.color + "lack\n";
+
+    	}
+			if(printOnTerminal)
+	            System.out.println(log);
+    		publishLog(command + log);
+    	return log;
+    }
+
+    public String reOCase3(NodeLog father, NodeLog grandpa, String direction){
+    	String log = "";
+    	log += "Rotated and painted, case 3: " + grandpa.element+ " rotated to " + direction + " with " + father.element;
+
+    	log += "\nGrandfather ("+ grandpa.element +")";
+    	if(grandpa.color == 'R')
+    		log += " Black changed to " + grandpa.color + "ed\n";
+    	else
+    		log += " Red changed to " + grandpa.color + "lack\n";
+
+    	log += "Father ("+ father.element +")";
+    	if(father.color == 'R')
+    		log += " Black changed to " + father.color + "ed\n";
+    	else
+    		log += " Red changed to " + father.color + "lack\n";
+
+
+			if(printOnTerminal)
+	            System.out.println(log);
+    		publishLog(command + log);
+    	return log;
+    }
+
+
     public String add(NodeLog added){
     	String log = "";
 			log += "Added on root: {" + added.element + "}";
@@ -263,14 +371,16 @@ public class Log{
 
 	public void exception(Thread t, Throwable e){
 		StackTraceElement[] stack = e.getStackTrace();
-		String exception = "THROWN EXCEPTION\n";
+		String exception = "THROWN EXCEPTION\n" + e.getClass().getCanonicalName() + "\n";
 		String message = e.getLocalizedMessage();
 
 		if(message == null)
 			message = "";
+		else
+			message += "\n";
 
 		exception += "Thread "+ t.getId() +", " + t.getState() + "\n";
-		exception += message + "\n" + stack[0].toString() + "\n" + stack[stack.length-1].toString();
+		exception += message + stack[0].toString() + "\n" + stack[stack.length-1].toString();
 
 		publishLog(exception);
 	}

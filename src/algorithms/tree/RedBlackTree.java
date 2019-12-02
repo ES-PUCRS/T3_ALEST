@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import src.Log;
 
+//Simulation => https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
 public class RedBlackTree {
     
     public static Log log;
@@ -75,108 +76,203 @@ public class RedBlackTree {
         root = null;
     }
 
-    private void reOrganize(Node n){
-        reOrganizeAux(n);
+    private void reOrganize(){
+        reOrganizeAux(root);
     }
-    private void reOrganizeAux(Node n){
+    private boolean reOrganizeAux(Node n){
         if(n == null)
-            return;
-        
+            return true;
+
         if(n.father == null && n.color == 'R'){
             n.rePaint();
-            reOrganizeAux(root);
+
+            log.reORootColor(exportLog(n));
+            return reOrganizeAux(root);
         }
         
         Node father = null, grandpa = null;
         
         if(n.father != null){
             father = n.father;
-
-            if(father.color == 'R')
-                if(n.color != 'B'){
-                    n.rePaint(); 
-                    reOrganizeAux(root);
-                }
-             
-
+        
             if(father.father != null){
                 grandpa = father.father;
-            }
-        }
+            
         
+                //Case 1
+                if(grandpa.color == 'B' && father.color == 'R' && n.color != 'B'){
+                    if(grandpa.element > father.element){
+                        if(grandpa.right != null && grandpa.right.color == 'R'){
+                                grandpa.right.rePaint();
+                                grandpa.rePaint();
+                                father.rePaint();
 
-        //Case 1
-        if(grandpa.element > father.element){
-            if(grandpa.right == null || grandpa.right.color == 'B')
-                if(father.element > n.element){
-                    leftRotation(father, n);
-                    reOrganizeAux(root);
-                }
-                
-        }else{
-            if(grandpa.left == null || grandpa.left.color == 'B')
-                if(father.element < n.element){
-                    rightRotation(father, n);
-                    reOrganizeAux(root);
-                }
-                    
-        }
+                                log.reOCase1(exportLog(grandpa.right),exportLog(father),exportLog(grandpa));
+                                return reOrganizeAux(root);
+                           }     
+                    }else{
+                        if(grandpa.left != null && grandpa.left.color == 'R'){
+                                grandpa.left.rePaint();
+                                grandpa.rePaint();
+                                father.rePaint();
 
-        //Case 3
-        if(grandpa.color == 'B'){
-            if(grandpa.element > father.element){
-                if(father.element > n.element){
-                    rightRotation(grandpa, father);
-                    grandpa.rePaint();
-                    father.rePaint();
-                    reOrganizeAux(root);
+                                log.reOCase1(exportLog(grandpa.left),exportLog(father),exportLog(grandpa));
+                                return reOrganizeAux(root);
+                            }
+                                
+                    }
                 }
-            }else{
-                if(father.element < n.element){
-                    leftRotation(grandpa, father);
-                    grandpa.rePaint();
-                    father.rePaint();
-                    reOrganizeAux(root);
+
+                //Case 2 
+                if(father.color != 'B' && n.color != 'B'){
+                    System.out.println("Case 2: ");
+                    if(grandpa.element > father.element){
+                       
+                            if(grandpa.right == null || grandpa.right.color == 'B')
+                                if(father.element > n.element){
+                                    rightRotation(father, n);
+
+                                    log.reOCase2(exportLog(n), exportLog(father), "right");
+                                    return reOrganizeAux(root);
+                                }else{
+                                    leftRotation(grandpa, father);
+                                    grandpa.rePaint();
+                                    father.rePaint();
+
+                                    log.reOCase2(exportLog(n), exportLog(father), "left");
+                                    return reOrganizeAux(root);
+                                }
+
+                    }else{
+                            if(grandpa.left == null || grandpa.left.color == 'B')
+                                if(father.element < n.element){
+                                    leftRotation(grandpa, father);
+                                    grandpa.rePaint();
+                                    father.rePaint();
+
+                                    log.reOCase2(exportLog(grandpa), exportLog(father), "left");
+                                    return reOrganizeAux(root);
+                                }else{
+                                    rightRotation(father, n);
+
+                                    log.reOCase2(exportLog(n), exportLog(father), "right");
+                                    return reOrganizeAux(root);
+                                }
+                    }   
+                }
+
+                //Case 3
+                if(grandpa.color == 'B' && father.color == 'R' && n.color != 'B'){
+                    if(grandpa.element > father.element){
+                        if(father.element > n.element){
+                            rightRotation(grandpa, father);
+                            grandpa.rePaint();
+                            father.rePaint();
+
+                            log.reOCase3(exportLog(grandpa), exportLog(father), "right");
+                            return reOrganizeAux(root);
+                        }
+                    }else{
+                        if(father.element < n.element){
+                            leftRotation(grandpa, father);
+                            grandpa.rePaint();
+                            father.rePaint();
+
+                            log.reOCase3(exportLog(father), exportLog(grandpa), "left");
+                            return reOrganizeAux(root);
+                        }
+                    }
                 }
             }
         }
-
         reOrganizeAux(n.left);
         reOrganizeAux(n.right);
+        return true;
     }
 
-    private void leftRotation(Node x, Node y){
-        if(x.father == null){
-            root = y;
-            y.father = null;
+    private void leftRotation(Node father, Node n){
+        if(father == null){
+            father.father = n;
+            n.father = null;
+            root = n;
         }else{
-            if(x.father.element > x.element)
-                x.father.left = y;
+            if(father.father.element > father.element)
+                father.father.left = n;
             else
-                x.father.right = y;
+                father.father.right = n;
 
-            y.father = x.father;
+            n.father = father.father;
+            father.father = n;
         }
-            x.father = y;
-            x.right = y.left;
-            y.left = x;
+
+            Node aux = father.left;
+            father.right = n.left;
+            n.left = father;
+
+
+            // System.out.println("\nNode: " + father.element);
+            // System.out.println("father: " + father.father.element);
+            // if(father.left != null)
+            // System.out.println("left: " + father.left.element);
+            // if(father.right != null)
+            // System.out.println("right: " + father.right.element + "\n");
+
+            // System.out.println("\nNode: " + n.element);
+            // System.out.println("father: " + n.father.element);
+            // if(n.left != null)
+            // System.out.println("left: " + n.left.element);
+            // if(n.right != null)
+            // System.out.println("right: " + n.right.element + "\n");
+
+            // System.out.println("\nNode: " + n.father.element);
+            // if(n.father.father != null)
+            // System.out.println("father: " + n.father.father.element);
+            // if(n.father.left != null)
+            // System.out.println("left: " + n.father.left.element);
+            // if(n.father.right != null)
+            // System.out.println("right: " + n.father.right.element + "\n");
     }
 
-    private void rightRotation(Node x, Node y){
-        if(y.father == null){
-            root = x;
-            x.father = null;
+    private void rightRotation(Node father, Node n){
+        if(father == null){
+            father.father = n;
+            n.father = null;
+            root = n;
         }else{
-            if(y.father.element > y.element)
-                y.father.left = y;
+            if(father.father.element > father.element)
+                father.father.left = n;
             else
-                y.father.right = x;
+                father.father.right = n;
 
-            x.father = y.father;
+            n.father = father.father;
+            father.father = n;
         }
-            y.father = x;
-            y.right = x.left;
-            x.left = y;
+
+            Node aux = father.right;
+            father.left = n.right;
+            n.right = father;
+
+
+            // System.out.println("\nNode: " + father.element);
+            // System.out.println("father: " + father.father.element);
+            // if(father.left != null)
+            // System.out.println("left: " + father.left.element);
+            // if(father.right != null)
+            // System.out.println("right: " + father.right.element + "\n");
+
+            // System.out.println("\nNode: " + n.element);
+            // System.out.println("father: " + n.father.element);
+            // if(n.left != null)
+            // System.out.println("left: " + n.left.element);
+            // if(n.right != null)
+            // System.out.println("right: " + n.right.element + "\n");
+
+            // System.out.println("\nNode: " + n.father.element);
+            // System.out.println("father: " + n.father.father.element);
+            // if(n.father.left != null)
+            // System.out.println("left: " + n.father.left.element);
+            // if(n.father.right != null)
+            // System.out.println("right: " + n.father.right.element + "\n");
     }
 
     private Node searchNodeRef(Integer element, Node target) {
@@ -223,7 +319,10 @@ public class RedBlackTree {
      * @param element elemento a ser adicionado na arvore.
      */
     public void add(Integer element) {
-        root = add(root, element, null);
+        Node n = add(root, element, null);
+        root = n;
+
+        reOrganize();
         count++;
     }
     private Node add(Node n, Integer e, Node father) {
@@ -236,7 +335,6 @@ public class RedBlackTree {
         	else
         		log.add(exportLog(aux));
 
-                reOrganize(aux);
             return aux;
         }
         if (n.element.compareTo(e) < 0) {
@@ -698,11 +796,21 @@ public class RedBlackTree {
         String line = "{";
         if(n != null){
 
-            // if(n.element == 70){
-            //     System.out.println("pai: " + n.element);
-            //     System.out.println("mae: " + n.father.element);
-            //     System.out.println("right: " + n.right.element);
-            //     System.out.println("irmao: " + n.left.element);
+
+            //     //HARD Debbuging
+            // if(n.element == 21 || n.element == 4 || n.element == 3){
+            //     try{
+            //         Thread.sleep(1000);
+            //     }catch(Exception e){
+            //         System.out.println(e);
+            //     }
+            //     System.out.println("\nNode: " + n.element);
+            //     System.out.println("father: " + n.father.element);
+            //     if(n.left != null)
+            //         System.out.println("left: " + n.left.element);
+            //     if(n.right != null)
+            //         System.out.println("right: " + n.right.element);
+            //     //return "";
             // }
 
         	if(n.father != null){

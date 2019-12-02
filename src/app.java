@@ -1,33 +1,35 @@
 package src;
 
 import src.algorithms.tree.*;
+import src.ui.UserInterface;
 
 public class app {
     public static void main(String[] args) {
+        UserInterface ui = new UserInterface();
+        RedBlackTree tree = new RedBlackTree();
+        String fx = "";
 
-        RedBlackTree b = new RedBlackTree();
+        do{
+            fx = ui.menu();
 
-        b.add(22);
-        b.add(3);
-        b.add(23);
-        b.add(21);
+            if(fx.charAt(0) == 'A'){
+                Integer a = Integer.parseInt(fx.substring(1));
+                tree.add(a);
+                System.out.println(tree);
+                fx = "";
+                continue;
+            }
 
-        System.out.println("\n\nTree: \n"+ b);
+
+            if(fx.charAt(0) == 'O'){
+                System.exit(0);
+            }
 
 
+            if(fx.charAt(0) == 'Q'){
+                System.exit(0);
+            }
 
-        // for(int i = 15; i > 0 ; i -= 5){
-        //     b.add(i);
-        //     System.out.println("\n\nTree: \n"+ b);
-        //     try{
-        //         Thread.sleep(1000);
-        //     }catch(Exception e){
-        //         System.out.println(e);   
-        //     }
-        // }
-
-        // System.out.println("\n\npositionsCentral\n"+ b.positionsCentral().toString());
-        // System.out.println("\n\npositionsPre\n"+ b.positionsPre().toString());
-        // System.out.println("\n\nTree: \n"+ b);
+        }while(fx.equals(""));
     }   
 }
