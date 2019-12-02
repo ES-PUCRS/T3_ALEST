@@ -1,0 +1,2 @@
+This folder is used to be a backup which garantee that the folder will not be removed for be empty on git push.
+It is important that the build.bath will export .class into this folder and is needed his existance.

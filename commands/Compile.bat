@@ -1,6 +1,6 @@
 SET mypath=%~dp0..
 cd %mypath%
 
-java -cp .\src\bin src.app
+java -cp .\bin src.app
 
 EXIT
