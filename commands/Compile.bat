@@ -3,4 +3,4 @@ cd %mypath%
 
 java -cp .\src\bin src.app
 
-PAUSE
+EXIT
