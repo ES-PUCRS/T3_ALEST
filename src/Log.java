@@ -2,6 +2,8 @@ package src;
 
 import src.algorithms.tree.NodeLog;
 
+import src.app;
+
 import java.io.FileNotFoundException;
 import java.lang.StackTraceElement;
 import java.io.IOException;
@@ -26,8 +28,7 @@ public class Log{
 	private static DateTimeFormatter time;
 
 	private static final String command = "";
-	private boolean printOnTerminal = true;
-	private boolean log = true;
+	private boolean printOnTerminal = app.printOnTerminal;
 
 	private Log(){
 		DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH'H'.mm'M'.ss'S'");

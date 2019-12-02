@@ -4,6 +4,8 @@ import src.algorithms.tree.*;
 import src.ui.UserInterface;
 
 public class app {
+
+    public static final boolean printOnTerminal = false;
    
     public static void main(String[] args) {
         RedBlackTree tree = new RedBlackTree();
