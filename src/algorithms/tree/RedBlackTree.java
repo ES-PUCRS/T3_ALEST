@@ -336,6 +336,7 @@ public class RedBlackTree {
 
         remove(aRemover);
         count--;
+        reOrganize();
         return true;
     }
 
@@ -346,7 +347,6 @@ public class RedBlackTree {
         if (n.left == null && n.right == null) {
             if (n == root) {
                 root = null;
-                root.father = null;
             } else {
                 if (pai.left == n)
                     pai.left = null;
