@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 import src.Log;
 
 //Simulation => https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
-public class RedBlackTree {
+public class RedBlackTree implements RedBlackTreeInterface{
     
     public static Log log;
 
