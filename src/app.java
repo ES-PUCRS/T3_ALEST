@@ -10,16 +10,13 @@ public class app {
     public static void main(String[] args) {
         RedBlackTree tree = new RedBlackTree();
 
-
-
         tree.add(21);
         tree.add(25);
         tree.add(3);
         tree.add(27);
         tree.add(11);
-        System.out.println(tree);
         tree.add(4);
-        System.out.println(tree);
+        System.out.println(tree.positionsWidth());
 
         
         // tree.add(22);

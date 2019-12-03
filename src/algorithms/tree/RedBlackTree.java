@@ -248,6 +248,12 @@ public class RedBlackTree {
         }
     }   
 
+    public Integer get(Integer element){
+        Node n = searchNodeRef(element, root);
+        if(n != null)
+            return n.element;
+        return null;
+    }
     
     public boolean isEmpty() {
         return (root == null);
@@ -278,6 +284,10 @@ public class RedBlackTree {
         root = n;
 
         reOrganize();
+        count++;
+    }
+    private void addClone(Integer element) {
+        root = add(root, element, null);
         count++;
     }
     private Node add(Node n, Integer e, Node father) {
@@ -535,19 +545,32 @@ public class RedBlackTree {
      * Retorna uma lista com todos os elementos da arvore na ordem de 
      * caminhamento em largura. 
      * @return src.algorithms.datastructures.LinkedList lista com os elementos da arvore
-     */     
+     */
     public LinkedList positionsWidth() {
-        Queue<Node> fila = new Queue<>();
         LinkedList res = new LinkedList();
-        // Implemente este metodo 
+        Queue<Node> n = new Queue();
+        Queue<Node> m = new Queue();
+        n.enqueue(root);
+        positionsWidthAux(n, m, res);
         return res;
-    }        
-    private LinkedList positionsWidthAux() {
-        Queue<Node> fila = new Queue<>();
-        LinkedList res = new LinkedList();
-        // Implemente este metodo 
+    }
+    private LinkedList positionsWidthAux(Queue n, Queue m, LinkedList res) {
+        if (!n.isEmpty()) {
+            Node node = (Node) n.dequeue();
+            res.add(node.element);
+
+            if(node.left != null)
+                m.enqueue(node.left);
+            if(node.right != null)
+                m.enqueue(node.right);
+
+            return positionsWidthAux(n, m, res); 
+        }else if(!m.isEmpty()){
+            return positionsWidthAux(m, n, res);
+        }
+        
         return res;
-    }    
+    }
 
 
     /**
@@ -555,7 +578,7 @@ public class RedBlackTree {
      * passadado por parametro.
      * @param element o elemento que se quer saber o nivel.
      * @return o nivel do nodo onde esta o elemento, ou -1 se nao
-     * encontrou o elemento.
+     * encontrou o elemento.nj
      */
     public int level(Integer element) {
         if(root == null)
@@ -592,15 +615,15 @@ public class RedBlackTree {
         return heightAux(root);
     }
 
-    public int heightAux(Node target) {
+    public int heightAux(Node n) {
         int height = 0;
         int heightLeft = 0;
         int heightRight = 0;
 
-        if (target.left != null)
-            heightLeft = height + heightAux(target.left);
-        if (target.right != null)
-            heightRight = height + heightAux(target.right);
+        if (n.left != null)
+            heightLeft = height + heightAux(n.left);
+        if (n.right != null)
+            heightRight = height + heightAux(n.right);
 
         if (heightLeft > heightRight)
             height = 1 + heightLeft;
@@ -793,6 +816,20 @@ public class RedBlackTree {
         return null;
     }
 
+    public RedBlackTree clone() {
+        RedBlackTree tree = new RedBlackTree();
+        cloneAux(tree, root);
+        return tree;
+    }
+    private void cloneAux(RedBlackTree tree, Node n){
+        if(n == null)
+            return;
+
+        tree.addClone(n.element);        
+
+        cloneAux(tree, n.left);
+        cloneAux(tree, n.right);
+    }
 
     private static void setExceptionWay(){
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
