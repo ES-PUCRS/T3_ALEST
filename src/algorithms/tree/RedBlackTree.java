@@ -76,6 +76,11 @@ public class RedBlackTree implements RedBlackTreeInterface{
         root = null;
     }
 
+    /**
+     * O(log n)
+     * Após alguma alteração da árvore, esse método é responsável por organizar a mesma
+     * contemplando os 3 casos (regras) da árvore rubro-negra 
+     */
     private void reOrganize(){
         reOrganizeAux(root);
     }
@@ -190,6 +195,11 @@ public class RedBlackTree implements RedBlackTreeInterface{
         return true;
     }
 
+    /**
+     * O(n)
+     * Realiza a rotação esquerda de z para y, onde y sendo filho direito de z,
+     * passará a ser pai e z o filho esquerdo de y.
+     */
     private void leftRotation(Node father, Node n){
         if(father.father == null){
             father.father = n;
@@ -210,6 +220,11 @@ public class RedBlackTree implements RedBlackTreeInterface{
         n.left = father;
     }
 
+    /**
+     * O(n)
+     * Realiza a rotação direita de z para y, onde y sendo filho esquerdo de z,
+     * passará a ser pai e z o filho direito de y.
+     */
     private void rightRotation(Node father, Node n){
         if(father.father == null){
             father.father = n;
@@ -230,6 +245,14 @@ public class RedBlackTree implements RedBlackTreeInterface{
         n.right = father;
     }
 
+
+
+     /**
+     * O(n)
+     * Pesquisa se o elemento está na árvore. 
+     * @return Node: o nodo do elemento, se estiver na árvore.
+     * Caso não esteja, retorna null;
+     */
     private Node searchNodeRef(Integer element, Node target) {
         int r;
 
@@ -248,26 +271,51 @@ public class RedBlackTree implements RedBlackTreeInterface{
         }
     }   
 
+    /**
+     * O(n)
+     * Pesquisa se o elemento passado por parâmetro, caso o mesmo esteja na árvore
+     * @param Integer: element, elemento a ser pesquisado. 
+     * @return Integer: Elemento pesquisado.
+     */
     public Integer get(Integer element){
         Node n = searchNodeRef(element, root);
         if(n != null)
             return n.element;
         return null;
     }
-    
+
+    /**
+     * O(1)
+     * Verifica se há elementos na árvore
+     * @return true: se a árvore estiver vazia.
+     */
     public boolean isEmpty() {
         return (root == null);
     }
 
+    /**
+     * O(1)
+     * Pesquisa quntos elementos a árvore possui.
+     * @return int: número de elementos na árvore.
+     */
     public int size() {
         return count;
     }
 
+    /**
+     * O(1)
+     * Exclui todos os nodos da árvore.
+     */
     public void clear() {
         count = 0;
         root = null;      
     }
    
+    /**
+     * O(1)
+     * Pesquisa qual a raíz da árvore. 
+     * @return Integer: raiz da árvore.
+     */
     public Integer getRoot() {
         if (isEmpty()) {
             throw new EmptyTreeException();
@@ -276,6 +324,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }
 
     /**
+     * O(log n)
      * Adiciona o elemento passado por parametro na arvore. 
      * @param element elemento a ser adicionado na arvore.
      */
@@ -309,16 +358,10 @@ public class RedBlackTree implements RedBlackTreeInterface{
         }
         return n;
     }     
-    
+
+
     /**
-     * Remove da arvore o elemento passado como parametro, mantendo as 
-     * propriedades da ABP.
-     * @param element elemento a ser removido.
-     * @return true se achou o elemento e fez a remocao, e false caso 
-     * contrario.
-     */
-    
-    /**
+     * O(log n)
      * Remove da arvore o elemento passado como parametro, mantendo as
      * propriedades da ABP.
      *
@@ -326,7 +369,6 @@ public class RedBlackTree implements RedBlackTreeInterface{
      * @return true se achou o elemento e fez a remocao, e false caso
      * contrario.
      */
-
     public boolean remove(Integer element) {
         if (element == null) return false;
         if (isEmpty()) return false;
@@ -395,54 +437,11 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }
 
 
-    private void replaceChild(Node n, Node r){
-        
-        if(n != null && n.father != null){
-            Node father = n.father;
 
-            log.replaceChild(exportLog(father), exportLog(n), exportLog(r));
-            
-            if(father.left != null && father.left.element == n.element)
-                father.left = r;
-            else if(father.right != null && father.right.element == n.element)
-                father.right = r;   
-            else
-                throw new NodeNotFoundException("Node father ("+father.element+") does not have "+n.element+" Node to replace by "+r.element+"Node");
-        }else if (isRoot(n.element) && r != null){
-            root = r;
-            r.father = null;
-            n.father = r;
-            Node brother = null;
-    
-            if(r.element < n.element){
-            	brother = r.right;
-            	r.right = n;
-            	n.left = null;
-            }else{
-            	brother = r.left;
-            	r.left = n;
-            	n.right = null;
-            }
-    
-            if(brother != null)
-	            add(brother.element);
-    
-            log.replaceChild(exportLog(n), exportLog(r));
-        }
-    }
-    private void findBiggestLeftLeaf(Node n){
-        if(n != null)
-            if(n.right != null)
-                findBiggestLeftLeaf(n = n.right);
-    }
-    private void findSmallestRightLeaf(Node n){
-        if(n != null)
-            if(n.left != null)
-                findSmallestRightLeaf(n = n.left);
-    }
 
 
     /**
+     * O(n)
      * Retorna o elemento que eh o filho a esquerda do elemento 
      * passado por parametro.
      * @param element do qual se quer saber quem eh o filho a esquerda.
@@ -460,6 +459,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }
 
     /**
+     * O(n)
      * Retorna o elemento que eh o filho a direita do elemento 
      * passado por parametro.
      * @param element do qual se quer saber quem eh o filho a direita.
@@ -477,6 +477,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }
 
     /**
+     * O(n)
      * Retorna o elemento que eh o pai do elemento passado por
      * parametro.
      * @param element do qual se quer saber quem eh o pai.
@@ -488,6 +489,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }    
 
     /**
+     * O(log n)
      * Retorna uma lista com todos os elementos da arvore. Os elementos
      * sao colocados na lista seguindo um caminhamento prefixado.
      * @return lista com os elementos da arvore na ordem prefixada
@@ -506,6 +508,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }
 
     /**
+     * O(log n)
      * Retorna uma lista com todos os elementos da arvore. Os elementos
      * sao colocados na lista seguindo um caminhamento central.
      * @return lista com os elementos da arvore na ordem central
@@ -524,6 +527,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }    
 
     /**
+     * O(log n)
      * Retorna uma lista com todos os elementos da arvore. Os elementos
      * sao colocados na lista seguindo um caminhamento posfixado.
      * @return lista com os elementos da arvore na ordem posfixada
@@ -542,6 +546,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }
 
     /** 
+     * O(log n)
      * Retorna uma lista com todos os elementos da arvore na ordem de 
      * caminhamento em largura. 
      * @return src.algorithms.datastructures.LinkedList lista com os elementos da arvore
@@ -574,6 +579,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
 
 
     /**
+     * O(log n)
      * Retorna o nivel do nodo no qual esta armazenado o elemento
      * passadado por parametro.
      * @param element o elemento que se quer saber o nivel.
@@ -606,6 +612,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }
 
     /**
+     * O(log n)
      * Retorna a altura da arvore. Deve chamar um metodo auxiliar recursivo.
      * @return altura da arvore
      */    
@@ -634,6 +641,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }
 
     /**
+     * O(n)
      * Retorna o se o nodo no qual esta armazenado o elemento
      * passadado por parametro é interno da árvore.
      * @param element o elemento que se quer saber se é interno.
@@ -653,6 +661,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }
 
     /**
+     * O(n)
      * Retorna o se o nodo no qual esta armazenado o elemento
      * passadado por parametro é externo da árvore.
      * @param element o elemento que se quer saber se é externo.
@@ -671,7 +680,12 @@ public class RedBlackTree implements RedBlackTreeInterface{
         return false;
     }
 
-
+    /**
+     * O(1).
+     * Retorna se o elemento é a raíz da árvore.
+     * @param element o elemento que se quer saber se é a raíz.
+     * @return true se o mesmo for a raíz.
+     */
     public boolean isRoot(Integer element) {
         if (root != null) {
             if (root.element.equals(element)) {
@@ -682,6 +696,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }    
     
     /**
+     * O(log n)
      * Conta o total de nodos da subarvore cuja raiz esta sendo passada por 
      * parametro.
      * @param n referencia para o nodo a partir do qual sera feita a contagem
@@ -697,6 +712,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
     
 
     /**
+     * O(n)
      * Procura pelo menor elemento da subarvore cuja raiz eh passada por
      * parametro,e retorna a referencia para o nodo no qual este elemento
      * esta armazenado.
@@ -716,7 +732,8 @@ public class RedBlackTree implements RedBlackTreeInterface{
     }
     
     /**
-     * Retorna o maior elemento armazenado na ABP.
+     * O(n)
+     * Retorna o maior elemento armazenado na Rubro-Negra.
      * @return Integer o maior elemento da arvore.
      */
     public Integer getBiggest() {
@@ -729,37 +746,6 @@ public class RedBlackTree implements RedBlackTreeInterface{
         if(n.right != null)
             return getBiggestAux(n.right);
         return n.element;
-    }
-
-    /**
-     * Remove um galho da árvore. A raiz deste galho eh o nodo que contem 
-     * o elemento passado por parâmetro (element). Caso "element" nao esteja
-     * na arvore, nao eh feita a remocao e o metodo retorna false.
-     * @param element raiz da subarvore que deve ser removida
-     * @return true se houve a remocao do galho, false caso contrario.
-     */
-    public boolean removeBranch(Integer element) {
-        if(root == null)
-            throw new EmptyTreeException();
-        
-        Node nAux = searchNodeRef(element, root); 
-        
-        if(nAux != null){
-            replaceChild(nAux, null);
-            removeBranchAux(nAux.left, nAux.right);
-            return true;
-        }
-        return false;                    
-    }
-    private void removeBranchAux(Node left, Node right) {
-        if(left != null){
-            replaceChild(left, null);
-            removeBranchAux(left.left, left.right);
-        }
-        if(right != null){
-            replaceChild(right, null);
-            removeBranchAux(right.left, right.right);
-        }
     }
 
 
