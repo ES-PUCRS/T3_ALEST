@@ -335,8 +335,10 @@ public class RedBlackTree implements RedBlackTreeInterface{
         reOrganize();
         count++;
     }
-    private void addClone(Integer element) {
-        root = add(root, element, null);
+    private void addClone(Integer element, char color) {
+        Node = add(root, element, null);
+        n.color = color;
+        root = n;
         count++;
     }
     private Node add(Node n, Integer e, Node father) {
@@ -811,7 +813,7 @@ public class RedBlackTree implements RedBlackTreeInterface{
         if(n == null)
             return;
 
-        tree.addClone(n.element);        
+        tree.addClone(n.element, n.color);        
 
         cloneAux(tree, n.left);
         cloneAux(tree, n.right);
